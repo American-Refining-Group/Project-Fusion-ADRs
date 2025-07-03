@@ -21,7 +21,7 @@ We will implement a hybrid reporting architecture that bridges the legacy AS/400
 ### Core Components:
 
 1. **Tabular Report Log SQL Table** - Central metadata repository:
-   - Fields: Report Name, CreatedBy, isShared, Date, Time, LocationPath, Reference Number
+   - Fields: ReportName, CreatedBy, Timestamp,FileName, LocationPath.
 
 2. **Shared Drive Storage** - File system location for converted report outputs
    - *Note: the client and the applications moving reports to the share will need the appropriate security access.
