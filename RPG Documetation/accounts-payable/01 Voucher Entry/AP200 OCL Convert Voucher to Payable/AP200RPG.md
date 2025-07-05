@@ -121,6 +121,40 @@ The program enforces several business rules to ensure accurate A/P processing:
 11. **Journal ID Assignment**:
     - Assigns `JRNID` as 'WT' for wire transfers, 'EE' for employee expenses, or 'PJ' otherwise.
 
+### Business Rules
+
+1. **Voucher Processing**:
+   - Processes header (`NS 01`) and detail (`NS 02`) records from `APTRAN`, skipping deleted vouchers (`ATHDEL = 'D'`).
+   - Assigns new voucher numbers (`NXTVO`) for non-canceled, non-100% retention vouchers and retention vouchers.
+   - Supports multiple payment types: prepaid (`P`), ACH (`A`), wire transfer (`W`), employee expense (`E`), and utility auto-pay (`U`).
+
+2. **Freight Invoice Handling**:
+   - Clears `FRAPST` to blank in `FRCINH` or `FRCFBH` if a voucher is deleted and `FRAPST = 'Y'`.
+   - Prioritizes `FRCFBH` (freight bill override header) over `FRCINH` (carrier invoice header) when checking freight status.
+
+3. **Discounts and Retentions**:
+   - Calculates discounts if `ATDSPC ≠ 0` and `ATDISC = 0` (`ATDISC = ATAMT * (ATDSPC / 100)`).
+   - For retentions (`ATRTPC ≠ 0`), computes retention amount (`ATRTAM`) and adjusts `ATAMT`. For 100% retention, moves `ATAMT` to `ATRTAM` and zeros `ATAMT`.
+
+4. **Intercompany Transfers**:
+   - Generates journal entries (`APPJJR`) for intercompany transactions (`ATCONO ≠ ATEXCO`) using intercompany G/L accounts (`ACICGL`).
+
+5. **Cancellation**:
+   - Marks canceled vouchers (`ATCNVO ≠ *ZEROS`) as deleted (`'D'`) in `APOPENH`, `APOPEND`, `APOPENV` and writes history records (`APHISTH`, `APHISTD`, `APHISTV`).
+
+6. **Vendor and Invoice Updates**:
+   - Updates vendor balances (`VN$YTD`, `VNPURC`, `VNCBAL`) with voucher and retention amounts.
+   - Records invoice details in `APINVH` for non-one-time vendors.
+
+7. **Journal Entries**:
+   - Generates `APPJJR` entries for A/P, expense, and intercompany accounts, including retention and non-retention transactions.
+
+8. **Purchase Order Updates**:
+   - Disabled (skipped via `GOTO SKIP`), but intended to update `POFILEH` (`POAPPU`) and `POFILED` (`PDRCQT`, `PDAPV$`, `PDRCDT`, ` PDCOMP`).
+
+9. **Reporting**:
+   - Produces a detailed Purchase Register with company, voucher, and line item details, including special fields like sales order, carrier ID, and process type.
+
 ---
 
 ### Tables Used

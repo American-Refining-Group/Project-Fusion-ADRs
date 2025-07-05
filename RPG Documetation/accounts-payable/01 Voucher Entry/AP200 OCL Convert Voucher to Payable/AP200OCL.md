@@ -237,4 +237,37 @@ The procedure performs several checks to ensure the system is in a valid state f
   - Procedures: `AP150`, `AP160`, `AP250`.
   - Files: A/P, inventory, purchase order, job cost, and freight invoice files.
 
-If you need further details on specific programs, file structures, or logic, let me know!
+
+### Tables (Files) Used
+
+The program references the following files (tables), with labels indicating temporary or shared files:
+1. **APTRAN** (`?9??20?`, either `APTR?WS?` or `APWT?WS?`): Transaction file for vouchers or wire transfers.
+2. **APPYTR** (`?9?APPT?WS?`): Payment transaction file (temporary).
+3. **GSTABL** (`?9?GSTABL`, shared): General system table.
+4. **GSCONT** (`?9?GSCONT`, shared): General system control file.
+5. **GLCONT** (`?9?GLCONT`, shared): General ledger control file.
+6. **APCONT** (`?9?APCONT`, shared): A/P control file.
+7. **APVEND** (`?9?APVEND`, shared): Vendor master file.
+8. **APOPEN** (`?9?APOPEN`, shared): Open A/P file.
+9. **APOPENH** (`?9?APOPNH`, shared): Open A/P header file.
+10. **APOPEND** (`?9?APOPND`, shared): Open A/P detail file.
+11. **APOPENV** (`?9?APOPNV`, shared): Open A/P vendor file.
+12. **APHISTH** (`?9?APHSTH`, shared): A/P history header file.
+13. **APHISTD** (`?9?APHSTD`, shared): A/P history detail file.
+14. **APHISTV** (`?9?APHSTV`, shared): A/P history vendor file.
+15. **APINVH** (`?9?APINVH`, shared): A/P invoice header file.
+16. **POFILEH** (`?9?POFILH`, shared): Purchase order header file.
+17. **POFILED** (`?9?POFILD`, shared): Purchase order detail file.
+18. **JCTRAN** (`?9?APJC?WS?`, temporary): Job cost transaction file.
+19. **APPJJR** (`?9?APPJ?WS?`, temporary): Journal register file.
+20. **AP205S** (`?9?APPK?WS?`, temporary): Sorted journal register file.
+21. **FRCINH** (`?9?FRCINH`, shared): Freight invoice header file.
+22. **FRCFBH** (`?9?FRCFBH`, shared): Freight bill header file.
+23. **TEMGEN** (`?9?TEMGEN`, shared): Temporary general ledger file.
+24. **INFIL1** (`?9?INFIL1`, shared): Inventory file.
+25. **INTZH1** (`?9?INTZH1`, shared): Inventory transaction holding file.
+26. **APSTAT** (`?9?APSTAT`): A/P status file for error checking.
+27. **LMS?WS?** (`?9?LMS?WS?`, temporary): LMS system identifier file.
+28. **APXX?WS?** (`?9?APXX?WS?`, temporary): Sorted transaction file.
+29. **APTX?WS?** (`?9?APTX?WS?`, temporary): Temporary transaction file.
+30. **APCT?WS?** (`?9?APCT?WS?`, temporary): Temporary A/P control file.
