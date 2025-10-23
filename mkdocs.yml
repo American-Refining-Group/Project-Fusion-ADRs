@@ -1,13 +1,13 @@
 # Site metadata
 
-site_name: Project Fusion -  Architectural  Decision Records
-site_description: Approved ADR's for that provide guidance and agreed upon methods for common patterns. 
+site_name: ARG ERP Architechtual Decison Records
+site_description: Documentation of process and architecture
 site_author: American Refining Group
-site_url: http://localhost.com  # Update for your hosting URL
+site_url: https://github.com # Update for your hosting URL
 
 # Repository information (optional, for GitHub Pages or similar)
-repo_name: TBD
-repo_url: http://TBD.com
+repo_name: American-Refining-Group/
+repo_url: https://github.com/American-Refining-Group/
 
 # Theme configuration
 theme:
@@ -47,9 +47,3 @@ markdown_extensions:
 
 
 
-# Optional: Extra settings for advanced features
-extra:
-  social:  # Add links to social or repo pages
-    - icon: fontawesome/brands/github
-      link: https://github.com/your-username/your-repo
-  generator: false  # Hide "Made with MkDocs" footer
