@@ -12,13 +12,13 @@
         <meta name="author" content="American Refining Group">
       
       
-        <link rel="canonical" href="https://github.com/Front%20End%20ADR%27s/LRO%20Long%20Running%20Operations/">
+        <link rel="canonical" href="https://github.com/Front%20End%20ADR%27s/Uproccesed%20Records%20Response/">
       
       
-        <link rel="prev" href="../File%20Upload%20Workflow/">
+        <link rel="prev" href="../LRO%20Long%20Running%20Operations/">
       
       
-        <link rel="next" href="../Uproccesed%20Records%20Response/">
+        <link rel="next" href="../../REST%20API%20ADR%27s/Reporting%20System%20Modernization/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
@@ -26,7 +26,7 @@
     
     
       
-        <title>LRO Long Running Operations - ARG ERP Architechtual Decison Records</title>
+        <title>Upload Status Response Object Documentation - ARG ERP Architechtual Decison Records</title>
       
     
     
@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#context" class="md-skip">
+        <a href="#upload-status-response-object-documentation" class="md-skip">
           Skip to content
         </a>
       
@@ -112,7 +112,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              LRO Long Running Operations
+              Upload Status Response Object Documentation
             
           </span>
         </div>
@@ -344,6 +344,29 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../LRO%20Long%20Running%20Operations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    LRO Long Running Operations
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -353,13 +376,15 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
+      
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
           
   
   
   <span class="md-ellipsis">
-    LRO Long Running Operations
+    Upload Status Response Object Documentation
     
   </span>
   
@@ -372,7 +397,7 @@
   
   
   <span class="md-ellipsis">
-    LRO Long Running Operations
+    Upload Status Response Object Documentation
     
   </span>
   
@@ -385,6 +410,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -393,160 +420,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#context" class="md-nav__link">
-    <span class="md-ellipsis">
-      Context
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#decision" class="md-nav__link">
-    <span class="md-ellipsis">
-      Decision
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Decision">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#core-pattern-components" class="md-nav__link">
-    <span class="md-ellipsis">
-      Core Pattern Components
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#generic-lro-workflow" class="md-nav__link">
-    <span class="md-ellipsis">
-      Generic LRO Workflow
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#pattern-application-examples" class="md-nav__link">
-    <span class="md-ellipsis">
-      Pattern Application Examples
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#reasoning" class="md-nav__link">
-    <span class="md-ellipsis">
-      Reasoning
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Reasoning">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#decoupling-scalability" class="md-nav__link">
-    <span class="md-ellipsis">
-      Decoupling &amp; Scalability
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#user-experience" class="md-nav__link">
-    <span class="md-ellipsis">
-      User Experience
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#reliability-resilience" class="md-nav__link">
-    <span class="md-ellipsis">
-      Reliability &amp; Resilience
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#developer-experience" class="md-nav__link">
-    <span class="md-ellipsis">
-      Developer Experience
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#trade-offs-accepted" class="md-nav__link">
-    <span class="md-ellipsis">
-      Trade-offs Accepted
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#consequences" class="md-nav__link">
-    <span class="md-ellipsis">
-      Consequences
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Consequences">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#positive" class="md-nav__link">
-    <span class="md-ellipsis">
-      Positive
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#negative" class="md-nav__link">
-    <span class="md-ellipsis">
-      Negative
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#upload-status-response-object-documentation" class="md-nav__link">
-    <span class="md-ellipsis">
-      Upload Status Response Object Documentation
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Upload Status Response Object Documentation">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
   <a href="#overview" class="md-nav__link">
     <span class="md-ellipsis">
       Overview
@@ -554,8 +427,8 @@
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#structure" class="md-nav__link">
     <span class="md-ellipsis">
       Structure
@@ -578,8 +451,8 @@
     </nav>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#status-payload-properties" class="md-nav__link">
     <span class="md-ellipsis">
       Status Payload Properties
@@ -686,8 +559,8 @@
     </nav>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#status-code-meanings" class="md-nav__link">
     <span class="md-ellipsis">
       Status Code Meanings
@@ -695,8 +568,8 @@
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#key-observations" class="md-nav__link">
     <span class="md-ellipsis">
       Key Observations
@@ -704,9 +577,13 @@
   </a>
   
 </li>
-        
-      </ul>
-    </nav>
+      
+        <li class="md-nav__item">
+  <a href="#concrete-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Concrete Example
+    </span>
+  </a>
   
 </li>
       
@@ -714,29 +591,6 @@
   
 </nav>
       
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../Uproccesed%20Records%20Response/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Upload Status Response Object Documentation
-    
-  </span>
-  
-
-      </a>
     </li>
   
 
@@ -1058,6 +912,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -1066,160 +922,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#context" class="md-nav__link">
-    <span class="md-ellipsis">
-      Context
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#decision" class="md-nav__link">
-    <span class="md-ellipsis">
-      Decision
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Decision">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#core-pattern-components" class="md-nav__link">
-    <span class="md-ellipsis">
-      Core Pattern Components
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#generic-lro-workflow" class="md-nav__link">
-    <span class="md-ellipsis">
-      Generic LRO Workflow
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#pattern-application-examples" class="md-nav__link">
-    <span class="md-ellipsis">
-      Pattern Application Examples
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#reasoning" class="md-nav__link">
-    <span class="md-ellipsis">
-      Reasoning
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Reasoning">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#decoupling-scalability" class="md-nav__link">
-    <span class="md-ellipsis">
-      Decoupling &amp; Scalability
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#user-experience" class="md-nav__link">
-    <span class="md-ellipsis">
-      User Experience
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#reliability-resilience" class="md-nav__link">
-    <span class="md-ellipsis">
-      Reliability &amp; Resilience
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#developer-experience" class="md-nav__link">
-    <span class="md-ellipsis">
-      Developer Experience
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#trade-offs-accepted" class="md-nav__link">
-    <span class="md-ellipsis">
-      Trade-offs Accepted
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#consequences" class="md-nav__link">
-    <span class="md-ellipsis">
-      Consequences
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Consequences">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#positive" class="md-nav__link">
-    <span class="md-ellipsis">
-      Positive
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#negative" class="md-nav__link">
-    <span class="md-ellipsis">
-      Negative
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#upload-status-response-object-documentation" class="md-nav__link">
-    <span class="md-ellipsis">
-      Upload Status Response Object Documentation
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Upload Status Response Object Documentation">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
   <a href="#overview" class="md-nav__link">
     <span class="md-ellipsis">
       Overview
@@ -1227,8 +929,8 @@
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#structure" class="md-nav__link">
     <span class="md-ellipsis">
       Structure
@@ -1251,8 +953,8 @@
     </nav>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#status-payload-properties" class="md-nav__link">
     <span class="md-ellipsis">
       Status Payload Properties
@@ -1359,8 +1061,8 @@
     </nav>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#status-code-meanings" class="md-nav__link">
     <span class="md-ellipsis">
       Status Code Meanings
@@ -1368,8 +1070,8 @@
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#key-observations" class="md-nav__link">
     <span class="md-ellipsis">
       Key Observations
@@ -1377,9 +1079,13 @@
   </a>
   
 </li>
-        
-      </ul>
-    </nav>
+      
+        <li class="md-nav__item">
+  <a href="#concrete-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Concrete Example
+    </span>
+  </a>
   
 </li>
       
@@ -1402,161 +1108,6 @@
   
 
 
-<p><strong>Title:</strong> Long-Running Operations (LRO) Pattern with HTTP/WebSocket/Queue Architecture<br />
-<strong>Date:</strong> 2025-10-26<br />
-<strong>Status:</strong> Accepted</p>
-<h2 id="context">Context<a class="headerlink" href="#context" title="Permanent link">&para;</a></h2>
-<p>The application requires a pattern for handling long-running operations (LROs) that exceed typical HTTP timeout limits. These operations include file uploads, batch validations, data migrations, complex calculations, and other processing tasks that take more than a few seconds to complete.</p>
-<p><strong>Key Requirements:</strong>
-- Execute operations that may take minutes to complete
-- Provide immediate acknowledgment to users when operations start
-- Deliver real-time progress updates during execution
-- Support operations across multiple modules (file uploads, validations, data processing, etc.)
-- Maintain security through proper authentication
-- Enable horizontal scaling for increased load</p>
-<p><strong>Constraints:</strong>
-- HTTP request timeout limitations (typically 30-60 seconds)
-- Need for immediate user feedback while processing continues
-- Browser connection limitations for long-polling approaches
-- Resource cleanup requirements for failed operations
-- User expectation of real-time progress visibility</p>
-<p><strong>Options Considered:</strong>
-1. <strong>Synchronous HTTP-only processing</strong> - Simple but causes timeouts on long operations
-2. <strong>HTTP with polling</strong> - Requires constant client requests, inefficient and increases server load
-3. <strong>Server-Sent Events (SSE)</strong> - One-way communication, limited browser support, connection management complexity
-4. <strong>Hybrid HTTP/WebSocket with queue-based processing</strong> - Balances immediate feedback with async processing and bidirectional communication</p>
-<h2 id="decision">Decision<a class="headerlink" href="#decision" title="Permanent link">&para;</a></h2>
-<p>We will implement a <strong>Long-Running Operations (LRO) pattern using a hybrid HTTP/WebSocket architecture with asynchronous processing via BullMQ</strong> for any operation that exceeds typical HTTP timeout thresholds.</p>
-<h3 id="core-pattern-components">Core Pattern Components<a class="headerlink" href="#core-pattern-components" title="Permanent link">&para;</a></h3>
-<ol>
-<li><strong>HTTP Layer (Synchronous Initiation)</strong></li>
-<li>Endpoint Pattern: <code>POST /{module}/{operation}</code></li>
-<li>Protocol: HTTP (REST)</li>
-<li>Responsibility: Initiate operation, perform fast validations, return operation ID</li>
-<li>
-<p>Timeout: &lt; 5 seconds for initial response</p>
-</li>
-<li>
-<p><strong>WebSocket Layer (Asynchronous Communication)</strong></p>
-</li>
-<li>Protocol: WebSocket with Socket.IO</li>
-<li>Authentication: JWT token-based</li>
-<li>Responsibility: Real-time progress updates, completion notifications, error reporting</li>
-<li>
-<p>Connection Model: Persistent, bidirectional</p>
-</li>
-<li>
-<p><strong>Queue Layer (Background Execution)</strong></p>
-</li>
-<li>Technology: BullMQ with Redis</li>
-<li>Responsibility: Execute long-running operations asynchronously</li>
-<li>Job Model: Parent/child job hierarchy for complex operations</li>
-</ol>
-<h3 id="generic-lro-workflow">Generic LRO Workflow<a class="headerlink" href="#generic-lro-workflow" title="Permanent link">&para;</a></h3>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
-<span class="normal"> 2</span>
-<span class="normal"> 3</span>
-<span class="normal"> 4</span>
-<span class="normal"> 5</span>
-<span class="normal"> 6</span>
-<span class="normal"> 7</span>
-<span class="normal"> 8</span>
-<span class="normal"> 9</span>
-<span class="normal">10</span>
-<span class="normal">11</span>
-<span class="normal">12</span>
-<span class="normal">13</span>
-<span class="normal">14</span>
-<span class="normal">15</span></pre></div></td><td class="code"><div><pre><span></span><code>Client Request (HTTP)
-   ↓
-[Fast Validation &amp; Setup]
-   ↓
-Operation ID Generated ──────► Immediate HTTP Response (200 OK)
-   ↓
-Queue Job Created
-   ↓
-[Background Processing]
-   ↓
-Progress Updates ────────────► WebSocket Events
-   ↓
-Completion/Failure ──────────► WebSocket Final Event
-   ↓
-[Resource Cleanup]
-</code></pre></div></td></tr></table></div>
-<h3 id="pattern-application-examples">Pattern Application Examples<a class="headerlink" href="#pattern-application-examples" title="Permanent link">&para;</a></h3>
-<p><strong>File Upload &amp; Processing:</strong>
-- HTTP: Accept file, validate format, return upload ID
-- Queue: Parse file, validate data, process batches
-- WebSocket: Batch progress, validation results, completion summary</p>
-<p><strong>Bulk Data Validation:</strong>
-- HTTP: Accept validation request, return validation ID
-- Queue: Execute validation rules across datasets
-- WebSocket: Progress percentage, rule violations, final report</p>
-<p><strong>Data Migration/Transformation:</strong>
-- HTTP: Initiate migration, return migration ID
-- Queue: Transform records, handle dependencies
-- WebSocket: Records processed, errors encountered, completion status</p>
-<p><strong>Complex Calculations:</strong>
-- HTTP: Submit calculation request, return calculation ID
-- Queue: Execute computation, handle intermediate results
-- WebSocket: Calculation progress, partial results, final output</p>
-<h2 id="reasoning">Reasoning<a class="headerlink" href="#reasoning" title="Permanent link">&para;</a></h2>
-<h3 id="decoupling-scalability">Decoupling &amp; Scalability<a class="headerlink" href="#decoupling-scalability" title="Permanent link">&para;</a></h3>
-<ul>
-<li><strong>Decouples client from processing lifecycle</strong>: HTTP response returns immediately, allowing users to continue working while operation executes</li>
-<li><strong>Prevents timeout cascades</strong>: Long operations don't hold HTTP connections open, avoiding timeout failures and connection pool exhaustion</li>
-<li><strong>Horizontal scaling capability</strong>: Queue workers can be added independently of API servers, allowing targeted scaling for processing bottlenecks</li>
-<li><strong>Load distribution</strong>: Redis-backed queue distributes work across multiple workers automatically</li>
-</ul>
-<h3 id="user-experience">User Experience<a class="headerlink" href="#user-experience" title="Permanent link">&para;</a></h3>
-<ul>
-<li><strong>Immediate acknowledgment</strong>: Users get instant feedback that their operation was accepted</li>
-<li><strong>Real-time visibility</strong>: Continuous progress updates reduce anxiety and uncertainty during long operations</li>
-<li><strong>Resumable operations</strong>: Users can disconnect and reconnect; progress state is maintained server-side</li>
-<li><strong>Detailed feedback</strong>: Granular progress and error information helps users understand what's happening</li>
-</ul>
-<h3 id="reliability-resilience">Reliability &amp; Resilience<a class="headerlink" href="#reliability-resilience" title="Permanent link">&para;</a></h3>
-<ul>
-<li><strong>Automatic retry mechanisms</strong>: BullMQ provides built-in retry logic for transient failures</li>
-<li><strong>Job persistence</strong>: Operations survive server restarts; Redis stores job state</li>
-<li><strong>Error isolation</strong>: Failed operations don't crash the API server</li>
-<li><strong>Resource cleanup</strong>: Systematic cleanup on success or failure prevents resource leaks</li>
-<li><strong>Observability</strong>: Operation IDs correlate events across all system layers</li>
-</ul>
-<h3 id="developer-experience">Developer Experience<a class="headerlink" href="#developer-experience" title="Permanent link">&para;</a></h3>
-<ul>
-<li><strong>Consistent pattern</strong>: Same architecture applies to all LROs across modules</li>
-<li><strong>Clear separation of concerns</strong>: HTTP for initiation, WebSocket for communication, Queue for execution</li>
-<li><strong>Testable components</strong>: Each layer can be tested independently</li>
-<li><strong>Reusable infrastructure</strong>: Queue workers, WebSocket handlers, and HTTP controllers follow standard patterns</li>
-</ul>
-<h3 id="trade-offs-accepted">Trade-offs Accepted<a class="headerlink" href="#trade-offs-accepted" title="Permanent link">&para;</a></h3>
-<ul>
-<li><strong>Increased system complexity</strong>: Three-layer architecture requires more infrastructure than simple synchronous approach</li>
-<li><strong>Eventual consistency</strong>: Brief delay between initiation and completion</li>
-<li><strong>Infrastructure dependencies</strong>: Redis and WebSocket server required</li>
-<li><strong>Connection management overhead</strong>: Must handle WebSocket lifecycle (connect, disconnect, reconnect)</li>
-</ul>
-<h2 id="consequences">Consequences<a class="headerlink" href="#consequences" title="Permanent link">&para;</a></h2>
-<h3 id="positive">Positive<a class="headerlink" href="#positive" title="Permanent link">&para;</a></h3>
-<ul>
-<li><strong>Handles operations of any duration</strong>: No artificial limits imposed by HTTP timeouts</li>
-<li><strong>Production-ready scalability</strong>: Proven pattern handles high load with horizontal scaling</li>
-<li><strong>Enhanced user experience</strong>: Users stay informed throughout operation lifecycle</li>
-<li><strong>Flexible application</strong>: Pattern works for uploads, validations, migrations, calculations, and more</li>
-<li><strong>Operational visibility</strong>: Complete tracing from initiation through completion</li>
-<li><strong>Clean architecture</strong>: Well-defined boundaries between layers</li>
-<li><strong>Graceful degradation</strong>: Operations continue even if WebSocket temporarily disconnects</li>
-</ul>
-<h3 id="negative">Negative<a class="headerlink" href="#negative" title="Permanent link">&para;</a></h3>
-<ul>
-<li><strong>Infrastructure complexity</strong>: Requires Redis, WebSocket server, and queue workers</li>
-<li><strong>Development overhead</strong>: More moving parts to develop, test, and debug</li>
-<li><strong>Operational burden</strong>: More services to monitor, maintain, and troubleshoot</li>
-<li><strong>Learning curve</strong>: Developers must understand async patterns and queue mechanics</li>
-<li><strong>Local development complexity</strong>: Full stack requires multiple services running locally</li>
-<li><strong>Network reliability dependency</strong>: WebSocket connections can be disrupted by network issues</li>
-</ul>
 <h1 id="upload-status-response-object-documentation">Upload Status Response Object Documentation<a class="headerlink" href="#upload-status-response-object-documentation" title="Permanent link">&para;</a></h1>
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
 <p>This response object represents the result of a batch invoice upload operation, providing comprehensive status information, validation results, and error tracking for each uploaded invoice.</p>
@@ -1732,6 +1283,211 @@ Completion/Failure ──────────► WebSocket Final Event
 <li><strong>Amount Formatting</strong>: <code>summary.totalAmount</code> is formatted with currency symbol, while <code>items[].invoiceAmount</code> is numeric only</li>
 </ol>
 <hr />
+<h2 id="concrete-example">Concrete Example<a class="headerlink" href="#concrete-example" title="Permanent link">&para;</a></h2>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">  1</span>
+<span class="normal">  2</span>
+<span class="normal">  3</span>
+<span class="normal">  4</span>
+<span class="normal">  5</span>
+<span class="normal">  6</span>
+<span class="normal">  7</span>
+<span class="normal">  8</span>
+<span class="normal">  9</span>
+<span class="normal"> 10</span>
+<span class="normal"> 11</span>
+<span class="normal"> 12</span>
+<span class="normal"> 13</span>
+<span class="normal"> 14</span>
+<span class="normal"> 15</span>
+<span class="normal"> 16</span>
+<span class="normal"> 17</span>
+<span class="normal"> 18</span>
+<span class="normal"> 19</span>
+<span class="normal"> 20</span>
+<span class="normal"> 21</span>
+<span class="normal"> 22</span>
+<span class="normal"> 23</span>
+<span class="normal"> 24</span>
+<span class="normal"> 25</span>
+<span class="normal"> 26</span>
+<span class="normal"> 27</span>
+<span class="normal"> 28</span>
+<span class="normal"> 29</span>
+<span class="normal"> 30</span>
+<span class="normal"> 31</span>
+<span class="normal"> 32</span>
+<span class="normal"> 33</span>
+<span class="normal"> 34</span>
+<span class="normal"> 35</span>
+<span class="normal"> 36</span>
+<span class="normal"> 37</span>
+<span class="normal"> 38</span>
+<span class="normal"> 39</span>
+<span class="normal"> 40</span>
+<span class="normal"> 41</span>
+<span class="normal"> 42</span>
+<span class="normal"> 43</span>
+<span class="normal"> 44</span>
+<span class="normal"> 45</span>
+<span class="normal"> 46</span>
+<span class="normal"> 47</span>
+<span class="normal"> 48</span>
+<span class="normal"> 49</span>
+<span class="normal"> 50</span>
+<span class="normal"> 51</span>
+<span class="normal"> 52</span>
+<span class="normal"> 53</span>
+<span class="normal"> 54</span>
+<span class="normal"> 55</span>
+<span class="normal"> 56</span>
+<span class="normal"> 57</span>
+<span class="normal"> 58</span>
+<span class="normal"> 59</span>
+<span class="normal"> 60</span>
+<span class="normal"> 61</span>
+<span class="normal"> 62</span>
+<span class="normal"> 63</span>
+<span class="normal"> 64</span>
+<span class="normal"> 65</span>
+<span class="normal"> 66</span>
+<span class="normal"> 67</span>
+<span class="normal"> 68</span>
+<span class="normal"> 69</span>
+<span class="normal"> 70</span>
+<span class="normal"> 71</span>
+<span class="normal"> 72</span>
+<span class="normal"> 73</span>
+<span class="normal"> 74</span>
+<span class="normal"> 75</span>
+<span class="normal"> 76</span>
+<span class="normal"> 77</span>
+<span class="normal"> 78</span>
+<span class="normal"> 79</span>
+<span class="normal"> 80</span>
+<span class="normal"> 81</span>
+<span class="normal"> 82</span>
+<span class="normal"> 83</span>
+<span class="normal"> 84</span>
+<span class="normal"> 85</span>
+<span class="normal"> 86</span>
+<span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="p">[</span>
+<span class="w">    </span><span class="s2">&quot;upload-status&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;U-1761481107580-6b830793-371b-4fc3-b94d-bbd40b24d5fa&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;summary&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;totalAmount&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;$800.00&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;countE&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;countW&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;countS&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;totalUploads&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">&quot;items&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">&quot;invoiceNo&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;RAJ-FLEXI-001&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;invoiceAmount&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;S&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;headerValidation&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;errors&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">                    </span><span class="nt">&quot;warnings&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span>
+<span class="w">                </span><span class="p">},</span>
+<span class="w">                </span><span class="nt">&quot;detailValidation&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;errors&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">                    </span><span class="nt">&quot;warnings&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span>
+<span class="w">                </span><span class="p">},</span>
+<span class="w">                </span><span class="nt">&quot;dbError&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">&quot;invoiceNo&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;RAJ-FLEXI-002&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;invoiceAmount&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;S&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;headerValidation&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;errors&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">                    </span><span class="nt">&quot;warnings&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span>
+<span class="w">                </span><span class="p">},</span>
+<span class="w">                </span><span class="nt">&quot;detailValidation&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;errors&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">                    </span><span class="nt">&quot;warnings&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span>
+<span class="w">                </span><span class="p">},</span>
+<span class="w">                </span><span class="nt">&quot;dbError&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">&quot;invoiceNo&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;RAJ-FLEXI-002&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;invoiceAmount&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;E&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;headerValidation&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;errors&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                        </span><span class="s2">&quot;Vendor with vendorNo: 0 and companyNo: 10 not found.&quot;</span><span class="p">,</span>
+<span class="w">                        </span><span class="s2">&quot;Vendor 0 not found for company 10&quot;</span>
+<span class="w">                    </span><span class="p">],</span>
+<span class="w">                    </span><span class="nt">&quot;warnings&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                        </span><span class="s2">&quot;discountDueDate: Missed Discount: Voucher entered on or after discount due date&quot;</span>
+<span class="w">                    </span><span class="p">]</span>
+<span class="w">                </span><span class="p">},</span>
+<span class="w">                </span><span class="nt">&quot;detailValidation&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;errors&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">                    </span><span class="nt">&quot;warnings&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span>
+<span class="w">                </span><span class="p">},</span>
+<span class="w">                </span><span class="nt">&quot;dbError&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">&quot;invoiceNo&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;RAJ-FLEXI-003&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;invoiceAmount&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">300</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;E&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;headerValidation&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;errors&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                        </span><span class="s2">&quot;Vendor with vendorNo: 0 and companyNo: 10 not found.&quot;</span><span class="p">,</span>
+<span class="w">                        </span><span class="s2">&quot;Vendor 0 not found for company 10&quot;</span>
+<span class="w">                    </span><span class="p">],</span>
+<span class="w">                    </span><span class="nt">&quot;warnings&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                        </span><span class="s2">&quot;discountDueDate: Missed Discount: Voucher entered on or after discount due date&quot;</span>
+<span class="w">                    </span><span class="p">]</span>
+<span class="w">                </span><span class="p">},</span>
+<span class="w">                </span><span class="nt">&quot;detailValidation&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;errors&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">                    </span><span class="nt">&quot;warnings&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span>
+<span class="w">                </span><span class="p">},</span>
+<span class="w">                </span><span class="nt">&quot;dbError&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">],</span>
+<span class="w">        </span><span class="nt">&quot;unprocessedItems&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">&quot;vendorNo&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;invoiceNo&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;RAJ-FLEXI-002&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;error&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;code&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;VENDOR_NOT_FOUND&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;WE DIDN&#39;T FIND ANY VENDOR WITH 0 AND INVOICE NO RAJ-FLEXI-002&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">&quot;field&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;vendorNo&quot;</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">&quot;vendorNo&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;invoiceNo&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;RAJ-FLEXI-003&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="nt">&quot;error&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;code&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;VENDOR_NOT_FOUND&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;WE DIDN&#39;T FIND ANY VENDOR WITH 0 AND INVOICE NO RAJ-FLEXI-003&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">&quot;field&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;vendorNo&quot;</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">],</span>
+<span class="w">        </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Completed&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">]</span>
+</code></pre></div></td></tr></table></div>
 
 
 

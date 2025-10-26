@@ -12,7 +12,7 @@
         <meta name="author" content="American Refining Group">
       
       
-        <link rel="canonical" href="https://github.com/Security%20ADR%27s/Security%20End%202%20End/">
+        <link rel="canonical" href="https://github.com/Security%20ADR%27s/Authorization%20Workflow%20/">
       
       
         <link rel="prev" href="../../RPG%20Legacy%20ADR%27s/RPG%20Development%20Standards/">
@@ -26,7 +26,7 @@
     
     
       
-        <title>Authentication and Authorization - ARG ERP Architechtual Decison Records</title>
+        <title>Authorization Workflow - ARG ERP Architechtual Decison Records</title>
       
     
     
@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#authentication-and-authorization" class="md-skip">
+        <a href="#context" class="md-skip">
           Skip to content
         </a>
       
@@ -112,7 +112,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Authentication and Authorization
+              Authorization Workflow 
             
           </span>
         </div>
@@ -350,7 +350,30 @@
   
   
   <span class="md-ellipsis">
-    Architectural Design Record (ADR)
+    LRO Long Running Operations
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Front%20End%20ADR%27s/Uproccesed%20Records%20Response/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Upload Status Response Object Documentation
     
   </span>
   
@@ -572,15 +595,13 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
-        
-      
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
           
   
   
   <span class="md-ellipsis">
-    Authentication and Authorization
+    Authorization Workflow 
     
   </span>
   
@@ -593,7 +614,7 @@
   
   
   <span class="md-ellipsis">
-    Authentication and Authorization
+    Authorization Workflow 
     
   </span>
   
@@ -605,8 +626,6 @@
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
-  
-    
   
   
     <label class="md-nav__title" for="__toc">
@@ -640,31 +659,31 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Reasoning">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#consequences" class="md-nav__link">
+    <span class="md-ellipsis">
+      Consequences
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Consequences">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#performance-and-user-experience" class="md-nav__link">
+  <a href="#positive" class="md-nav__link">
     <span class="md-ellipsis">
-      Performance and User Experience
+      Positive
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#simplicity" class="md-nav__link">
+  <a href="#negative" class="md-nav__link">
     <span class="md-ellipsis">
-      Simplicity
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#scalable-pagination" class="md-nav__link">
-    <span class="md-ellipsis">
-      Scalable Pagination
+      Negative
     </span>
   </a>
   
@@ -676,44 +695,29 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#rest-api-capabilities" class="md-nav__link">
+  <a href="#implementation-notes" class="md-nav__link">
     <span class="md-ellipsis">
-      REST API Capabilities
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="REST API Capabilities">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#filtering" class="md-nav__link">
-    <span class="md-ellipsis">
-      Filtering
+      Implementation Notes
     </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#sorting" class="md-nav__link">
+      
+        <li class="md-nav__item">
+  <a href="#related-decisions" class="md-nav__link">
     <span class="md-ellipsis">
-      Sorting
+      Related Decisions
     </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#pagination-offset-based" class="md-nav__link">
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
     <span class="md-ellipsis">
-      Pagination (Offset-Based)
+      References
     </span>
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -823,8 +827,6 @@
   
   
   
-    
-  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -857,31 +859,31 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Reasoning">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#consequences" class="md-nav__link">
+    <span class="md-ellipsis">
+      Consequences
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Consequences">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#performance-and-user-experience" class="md-nav__link">
+  <a href="#positive" class="md-nav__link">
     <span class="md-ellipsis">
-      Performance and User Experience
+      Positive
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#simplicity" class="md-nav__link">
+  <a href="#negative" class="md-nav__link">
     <span class="md-ellipsis">
-      Simplicity
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#scalable-pagination" class="md-nav__link">
-    <span class="md-ellipsis">
-      Scalable Pagination
+      Negative
     </span>
   </a>
   
@@ -893,44 +895,29 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#rest-api-capabilities" class="md-nav__link">
+  <a href="#implementation-notes" class="md-nav__link">
     <span class="md-ellipsis">
-      REST API Capabilities
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="REST API Capabilities">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#filtering" class="md-nav__link">
-    <span class="md-ellipsis">
-      Filtering
+      Implementation Notes
     </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#sorting" class="md-nav__link">
+      
+        <li class="md-nav__item">
+  <a href="#related-decisions" class="md-nav__link">
     <span class="md-ellipsis">
-      Sorting
+      Related Decisions
     </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#pagination-offset-based" class="md-nav__link">
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
     <span class="md-ellipsis">
-      Pagination (Offset-Based)
+      References
     </span>
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -953,141 +940,123 @@
   
 
 
-<h1 id="authentication-and-authorization">Authentication and Authorization<a class="headerlink" href="#authentication-and-authorization" title="Permanent link">&para;</a></h1>
-<p><strong>Title:</strong> Authentication and Authorization Security Standards
-<strong>Date:</strong> 2025-06-16<br />
-<strong>Status:</strong> Accepted  </p>
-<hr />
+  <h1>Authorization Workflow </h1>
+
+<p><strong>Title:</strong> Role-Based Access Control (RBAC) Authorization Workflow</p>
+<p><strong>Date:</strong> 2025-10-26</p>
+<p><strong>Status:</strong> Accepted</p>
 <h2 id="context">Context<a class="headerlink" href="#context" title="Permanent link">&para;</a></h2>
-<p>This decision addresses the approach to managing grid-level data interactions — specifically filtering, sorting, and pagination — for data-driven UI components.</p>
-<p>Two architectural options were considered for handling these features:</p>
-<p>Client-Side Handling – Load the dataset once from the API and allow all interactions (filtering, sorting, pagination) to occur entirely in the browser.
-Server-Side Handling – Rely on backend API endpoints to execute filtering, sorting, and pagination for every user interaction.
-The system in question needs to handle datasets that may be large in some cases, but are typically manageable in size after user-driven filtering.</p>
-<hr />
+<p>The ARG Web system requires a secure and flexible authorization mechanism to control user access to various routes and endpoints. The system needed to address several key requirements:</p>
+<ul>
+<li>Validate user requests before they reach backend services</li>
+<li>Support both group-based and individual user-based permissions</li>
+<li>Allow fine-grained control where specific rights can be disabled for individual users even if their groups have those rights</li>
+<li>Enable custom rights assignment directly to users outside of group memberships</li>
+<li>Maintain separation of concerns between authentication and authorization</li>
+<li>Support many-to-many relationships between routes and rights</li>
+</ul>
+<p>The authorization layer needed to work with JWT tokens and enforce access control in a consistent, auditable manner across all API endpoints. Additionally, the system required flexibility to handle complex scenarios where users belong to multiple groups but may need certain permissions blocked or custom permissions added.</p>
 <h2 id="decision">Decision<a class="headerlink" href="#decision" title="Permanent link">&para;</a></h2>
-<p>The architecture will implement client-side filtering, sorting, and pagination for grid components.</p>
-<p>To support this:</p>
-<p>The UI will include filter inputs and a "Search" button that users must use to initiate data retrieval.
-Upon clicking "Search", the frontend will send a request to the API including any provided filter criteria.
-The API will return a page of data (default size of 500 records or fewer) along with offset-based pagination metadata.
-All grid operations (filtering, sorting, pagination) will then be handled entirely client-side using the retrieved data.
-In addition:</p>
-<p>The API will implement standardized filtering and sorting behavior for all relevant endpoints. This ensures consistency and reusability of query logic across the application.
-Every API endpoint will support:
-Sorting via query parameters in ascending/descending order.
-Filtering on text fields (equality) and numeric fields (equality, greater than, less than, and range).
-If the total number of matching records exceeds the initial page size (default limit = 500), the API will not return an error. Instead, it will return a nextPageUrl that can be used to fetch additional pages of data.</p>
-<hr />
+<p>Implement a middleware-based authorization workflow that validates user access through a dedicated ARG Web Auth service using a multi-table RBAC model.</p>
+<p><strong>Key Components:</strong></p>
+<ol>
+<li><strong>Middleware Layer:</strong> Intercepts all requests in the ARG Web Backend and forwards authorization checks to the Auth service</li>
+<li><strong>JWT Token Processing:</strong> Decodes access tokens to extract UserId for permission lookups</li>
+<li><strong>Database Schema:</strong></li>
+<li><code>Group</code> - Stores all groups</li>
+<li><code>Rights</code> - Stores all rights/permissions</li>
+<li><code>GroupRights</code> - Maps rights to groups</li>
+<li><code>UserRights</code> - Stores user-specific right overrides (enable/disable)</li>
+<li><code>UserGroupMapping</code> - Associates users with groups (many-to-many)</li>
+<li><code>RouterMaster</code> - Stores all available routes/endpoints</li>
+<li>
+<p><code>RouteRightsMapping</code> - Maps routes to required rights (many-to-many)</p>
+</li>
+<li>
+<p><strong>Authorization Flow:</strong></p>
+</li>
+<li>Middleware sends: Access Token, MetaData, Path URL to Auth service</li>
+<li>Auth service decodes token to extract UserId</li>
+<li>System queries UserGroupMapping to get all user's groups</li>
+<li>Derives rights from GroupRights for all user's groups</li>
+<li>Applies UserRights overrides (disabled rights are blocked, custom rights are added)</li>
+<li>Checks RouteRightsMapping to verify if user has required rights for the route</li>
+<li>Returns authorized/unauthorized response</li>
+</ol>
 <h2 id="reasoning">Reasoning<a class="headerlink" href="#reasoning" title="Permanent link">&para;</a></h2>
-<h3 id="performance-and-user-experience">Performance and User Experience<a class="headerlink" href="#performance-and-user-experience" title="Permanent link">&para;</a></h3>
-<p>Interactions like filtering and sorting are executed instantly in the browser, eliminating round trips to the server and improving responsiveness.
-Users control when and how data is retrieved, reducing backend load and improving perceived speed.</p>
-<h3 id="simplicity">Simplicity<a class="headerlink" href="#simplicity" title="Permanent link">&para;</a></h3>
-<p>Reduces complexity in the frontend-to-backend interaction model.
-Decreases backend logic for grid state handling.
-Encourages standardization of query patterns across endpoints.</p>
-<h3 id="scalable-pagination">Scalable Pagination<a class="headerlink" href="#scalable-pagination" title="Permanent link">&para;</a></h3>
-<p>Using offset and limit enables scalable data retrieval while avoiding hard failures due to record caps.
-Providing metadata like nextPageUrl and totalRecords gives clients full control if they need to fetch more data explicitly.</p>
-<hr />
-<h2 id="rest-api-capabilities">REST API Capabilities<a class="headerlink" href="#rest-api-capabilities" title="Permanent link">&para;</a></h2>
-<p>Even though grid operations are handled client-side after data retrieval, the REST API will support consistent and standardized pagination, filtering, and sorting behavior:</p>
-<h3 id="filtering">Filtering<a class="headerlink" href="#filtering" title="Permanent link">&para;</a></h3>
-<p>Text fields: Supports equality match (eq)
-Numeric fields: Supports:
-Equality (eq)
-Greater than (gt)
-Less than (lt)
-Range filtering (e.g., min/max or between operators)</p>
-<h3 id="sorting">Sorting<a class="headerlink" href="#sorting" title="Permanent link">&para;</a></h3>
-<p>Query parameter format: ?sort=field.asc or ?sort=field.desc
-Multiple sort keys may be supported where applicable.</p>
-<h3 id="pagination-offset-based">Pagination (Offset-Based)<a class="headerlink" href="#pagination-offset-based" title="Permanent link">&para;</a></h3>
-<p>Default limit: 500
-Supports limit and offset parameters
-The API response includes:
-```json
-{
-  "data": [ /<em> array of records </em>/ ],
-  "offset": 0,
-  "limit": 500,
-  "totalRecords": 1342,
-  "hasMore": true,
-  "nextPageUrl": "/api/items?offset=500&amp;limit=500",
-  "previousPageUrl": null,
-  "filtersApplied": {
-    "status": "active"
-  },
-  "sort": "createdAt.desc"
-}</p>
-<p>Edit</p>
-<p>ADR Template
-Document 
-I've created a comprehensive ADR template based on the structure from your example. The template includes all the key sections and provides guidance on what to include in each part:</p>
-<p>Header section with title, date, and status
-Context for describing the problem and options considered
-Decision stating what was chosen
-Reasoning explaining why (with subsections for different benefit categories)
-Consequences covering both positive and negative impacts
-Implementation Notes for technical details
-Related Decisions for linking to other ADRs
-References for external sources
-The template uses placeholder text in brackets to guide you on what content to include in each section. You can customize it further based on your team's specific needs or standards.</p>
-<p>Architectural Design Record (ADR)
-Title: [Brief descriptive title of the architectural decision]
-Date: [YYYY-MM-DD]
-Status: [Proposed | Accepted | Rejected | Deprecated | Superseded]</p>
-<p>Context
-[Describe the situation that requires a decision to be made. Include:]</p>
-<p>[What architectural problem or question needs to be addressed?]
-[What are the key factors, constraints, or requirements driving this decision?]
-[What options were considered?]
-[Any relevant background information or system context]
-Decision
-[State the architectural decision that has been made.]</p>
-<p>[Include specific details about:]</p>
-<p>[What approach will be implemented]
-[Key components or patterns involved]
-[Any specific technical requirements or constraints]
-[Implementation details that are crucial to the decision]
-Reasoning
-[Explain why this decision was made. Include:]</p>
-<p>[Benefit Category 1 (e.g., Performance, Maintainability, etc.)]
-[Specific reasoning points]
-[How this decision addresses the identified concerns]
-[Benefit Category 2]
-[Additional reasoning points]
-[Trade-offs considered]
-[Additional Categories as needed]
-[Other factors that influenced the decision]
-[Risks mitigated or accepted]
-Consequences
-[Describe the positive and negative consequences of this decision]</p>
-<p>Positive
-[Benefits gained from this approach]
-[Problems solved]
-[Improvements achieved]
-Negative
-[Trade-offs or limitations accepted]
-[New complexities introduced]
-[Technical debt or future considerations]
-Implementation Notes
-[Optional section for specific implementation details, if relevant:]</p>
-<p>[Technical specifications]
-[API contracts or interfaces]
-[Configuration requirements]
-[Migration considerations]
-[Example JSON schema, code snippets, or configuration examples can be included here]</p>
-<p>Related Decisions
-[Optional section linking to other ADRs:]</p>
-<p>[ADR-XXX: Related decision that this builds upon]
-[ADR-YYY: Decision that this supersedes or conflicts with]
-References
-[Optional section for external references:]</p>
-<p>[Documentation links]
-[Industry standards or patterns referenced]
-[Research or articles that influenced the decision]</p>
+<p><strong>Security &amp; Separation of Concerns</strong>
+- Centralized authorization logic in a dedicated Auth service prevents inconsistent security enforcement across the application
+- Middleware pattern ensures no endpoint can bypass authorization checks
+- JWT token validation provides stateless authentication that scales well</p>
+<p><strong>Flexibility &amp; Granularity</strong>
+- Group-based permissions provide efficient management for common access patterns
+- UserRights table enables precise control by allowing administrators to disable specific group rights or add custom rights for individual users
+- This hybrid approach handles both standard and exceptional access requirements without creating numerous single-purpose groups</p>
+<p><strong>Scalability &amp; Maintainability</strong>
+- Many-to-many relationships (UserGroupMapping, RouteRightsMapping) allow flexible assignment without data duplication
+- Users can belong to multiple groups, inheriting rights from all memberships
+- Routes can require multiple rights, enabling complex authorization rules
+- Normalized database structure makes it easy to audit permissions and add new routes or rights</p>
+<p><strong>Performance Considerations</strong>
+- Single authorization check per request minimizes database queries
+- UserId-based lookup is efficient and can be cached
+- Trade-off: Additional network call to Auth service adds latency, but gains security and maintainability</p>
+<h2 id="consequences">Consequences<a class="headerlink" href="#consequences" title="Permanent link">&para;</a></h2>
+<h3 id="positive">Positive<a class="headerlink" href="#positive" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Fine-grained access control:</strong> System can handle complex permission scenarios including group inheritance with individual overrides</li>
+<li><strong>Audit trail:</strong> Clear permission structure makes it easy to determine why a user has or doesn't have access</li>
+<li><strong>Centralized security:</strong> Single point of authorization enforcement reduces security vulnerabilities</li>
+<li><strong>Flexibility:</strong> New routes, rights, and groups can be added without code changes</li>
+<li><strong>Scalability:</strong> Stateless JWT validation allows horizontal scaling of Auth service</li>
+</ul>
+<h3 id="negative">Negative<a class="headerlink" href="#negative" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Additional latency:</strong> Every request requires a call to the Auth service, adding network overhead</li>
+<li><strong>Complexity:</strong> Multi-table design requires understanding of the entire permission model for troubleshooting</li>
+<li><strong>Potential inconsistency:</strong> UserRights overrides can create confusion if not well-documented (users blocked from group rights they should have)</li>
+<li><strong>Database load:</strong> Authorization checks may create significant database load under high traffic</li>
+<li><strong>Single point of failure:</strong> Auth service unavailability blocks all requests (requires high availability setup)</li>
+</ul>
+<h2 id="implementation-notes">Implementation Notes<a class="headerlink" href="#implementation-notes" title="Permanent link">&para;</a></h2>
+<p><strong>Authorization Request Format:</strong>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;accessToken&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;JWT_TOKEN&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;metaData&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;key1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;key2&quot;</span><span class="p">],</span>
+<span class="w">  </span><span class="nt">&quot;pathUrl&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/api/resource/endpoint&quot;</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div></p>
+<p><strong>Authorization Response:</strong>
+- Success: Request forwarded to ARG Web Backend
+- Failure: Return "Not Authorized" error response</p>
+<p><strong>Permission Resolution Algorithm:</strong>
+1. Extract UserId from JWT
+2. Query UserGroupMapping for all groups where UserId exists
+3. Query GroupRights for all rights associated with those groups
+4. Query UserRights for user-specific overrides
+5. Apply logic:
+   - Start with all group rights
+   - Remove any rights marked as disabled in UserRights (IsActive = false)
+   - Add any custom rights marked as enabled in UserRights (IsActive = true)
+6. Query RouteRightsMapping to get required rights for requested route
+7. Check if user's final rights set includes all required rights</p>
+<p><strong>Database Relationships:</strong>
+- User → UserGroupMapping (1:N) → Group
+- Group → GroupRights (1:N) → Rights
+- User → UserRights (1:N) → Rights (with IsActive flag)
+- Route → RouteRightsMapping (1:N) → Rights</p>
+<h2 id="related-decisions">Related Decisions<a class="headerlink" href="#related-decisions" title="Permanent link">&para;</a></h2>
+<p>[No related ADRs referenced in the source document]</p>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Internal document: "Authorization Workflow in ARG Web System"</li>
+<li>JWT (JSON Web Tokens) standard for authentication</li>
+<li>RBAC (Role-Based Access Control) design patterns</li>
+</ul>
 
 
 
