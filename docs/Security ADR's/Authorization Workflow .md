@@ -26,22 +26,22 @@ Implement a middleware-based authorization workflow that validates user access t
 1. **Middleware Layer:** Intercepts all requests in the ARG Web Backend and forwards authorization checks to the Auth service
 2. **JWT Token Processing:** Decodes access tokens to extract UserId for permission lookups
 3. **Database Schema:**
-   - `Group` - Stores all groups
-   - `Rights` - Stores all rights/permissions
-   - `GroupRights` - Maps rights to groups
-   - `UserRights` - Stores user-specific right overrides (enable/disable)
-   - `UserGroupMapping` - Associates users with groups (many-to-many)
-   - `RouterMaster` - Stores all available routes/endpoints
-   - `RouteRightsMapping` - Maps routes to required rights (many-to-many)
+    `Group` - Stores all groups
+    `Rights` - Stores all rights/permissions
+    `GroupRights` - Maps rights to groups
+    `UserRights` - Stores user-specific right overrides (enable/disable)
+    `UserGroupMapping` - Associates users with groups (many-to-many)
+    `RouterMaster` - Stores all available routes/endpoints
+    `RouteRightsMapping` - Maps routes to required rights (many-to-many)
 
 4. **Authorization Flow:**
-   - Middleware sends: Access Token, MetaData, Path URL to Auth service
-   - Auth service decodes token to extract UserId
-   - System queries UserGroupMapping to get all user's groups
-   - Derives rights from GroupRights for all user's groups
-   - Applies UserRights overrides (disabled rights are blocked, custom rights are added)
-   - Checks RouteRightsMapping to verify if user has required rights for the route
-   - Returns authorized/unauthorized response
+    <br>Middleware sends: Access Token, MetaData, Path URL to Auth service
+    <br>Auth service decodes token to extract UserId
+    <br>System queries UserGroupMapping to get all user's groups
+    <br>Derives rights from GroupRights for all user's groups
+    <br>Applies UserRights overrides (disabled rights are blocked, custom rights are added)
+    <br>Checks RouteRightsMapping to verify if user has required rights for the route
+    <br>Returns authorized/unauthorized response
 
 ## Reasoning
 
