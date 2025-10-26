@@ -1,4 +1,4 @@
-# Legacy AS/400 Reporting System Modernization  
+# App Reports Structure  
 
 **Title:** Legacy AS/400 Reporting System Modernization  
 **Date:** 2025-06-27  

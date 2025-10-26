@@ -1,179 +1,147 @@
-#Long Running Operations - LRO's
+# Architectural Design Record (ADR)
 
-Title: Long Running Operations
-Date: 2025-06-16  
-Status: Accepted  
-
----
+**Title:** Long-Running Operations (LRO) Pattern with HTTP/WebSocket/Queue Architecture  
+**Date:** 2025-10-26  
+**Status:** Accepted
 
 ## Context
 
-This decision addresses the approach to managing grid-level data interactions — specifically filtering, sorting, and pagination — for data-driven UI components.
+The application requires a pattern for handling long-running operations (LROs) that exceed typical HTTP timeout limits. These operations include file uploads, batch validations, data migrations, complex calculations, and other processing tasks that take more than a few seconds to complete.
 
-Two architectural options were considered for handling these features:
+**Key Requirements:**
+- Execute operations that may take minutes to complete
+- Provide immediate acknowledgment to users when operations start
+- Deliver real-time progress updates during execution
+- Support operations across multiple modules (file uploads, validations, data processing, etc.)
+- Maintain security through proper authentication
+- Enable horizontal scaling for increased load
 
-Client-Side Handling – Load the dataset once from the API and allow all interactions (filtering, sorting, pagination) to occur entirely in the browser.
-Server-Side Handling – Rely on backend API endpoints to execute filtering, sorting, and pagination for every user interaction.
-The system in question needs to handle datasets that may be large in some cases, but are typically manageable in size after user-driven filtering.
+**Constraints:**
+- HTTP request timeout limitations (typically 30-60 seconds)
+- Need for immediate user feedback while processing continues
+- Browser connection limitations for long-polling approaches
+- Resource cleanup requirements for failed operations
+- User expectation of real-time progress visibility
 
----
+**Options Considered:**
+1. **Synchronous HTTP-only processing** - Simple but causes timeouts on long operations
+2. **HTTP with polling** - Requires constant client requests, inefficient and increases server load
+3. **Server-Sent Events (SSE)** - One-way communication, limited browser support, connection management complexity
+4. **Hybrid HTTP/WebSocket with queue-based processing** - Balances immediate feedback with async processing and bidirectional communication
 
 ## Decision
 
-The architecture will implement client-side filtering, sorting, and pagination for grid components.
+We will implement a **Long-Running Operations (LRO) pattern using a hybrid HTTP/WebSocket architecture with asynchronous processing via BullMQ** for any operation that exceeds typical HTTP timeout thresholds.
 
-To support this:
+### Core Pattern Components
 
-The UI will include filter inputs and a "Search" button that users must use to initiate data retrieval.
-Upon clicking "Search", the frontend will send a request to the API including any provided filter criteria.
-The API will return a page of data (default size of 500 records or fewer) along with offset-based pagination metadata.
-All grid operations (filtering, sorting, pagination) will then be handled entirely client-side using the retrieved data.
-In addition:
+1. **HTTP Layer (Synchronous Initiation)**
+   - Endpoint Pattern: `POST /{module}/{operation}`
+   - Protocol: HTTP (REST)
+   - Responsibility: Initiate operation, perform fast validations, return operation ID
+   - Timeout: < 5 seconds for initial response
 
-The API will implement standardized filtering and sorting behavior for all relevant endpoints. This ensures consistency and reusability of query logic across the application.
-Every API endpoint will support:
-Sorting via query parameters in ascending/descending order.
-Filtering on text fields (equality) and numeric fields (equality, greater than, less than, and range).
-If the total number of matching records exceeds the initial page size (default limit = 500), the API will not return an error. Instead, it will return a nextPageUrl that can be used to fetch additional pages of data.
+2. **WebSocket Layer (Asynchronous Communication)**
+   - Protocol: WebSocket with Socket.IO
+   - Authentication: JWT token-based
+   - Responsibility: Real-time progress updates, completion notifications, error reporting
+   - Connection Model: Persistent, bidirectional
 
----
+3. **Queue Layer (Background Execution)**
+   - Technology: BullMQ with Redis
+   - Responsibility: Execute long-running operations asynchronously
+   - Job Model: Parent/child job hierarchy for complex operations
+
+### Generic LRO Workflow
+
+```
+Client Request (HTTP)
+   ↓
+[Fast Validation & Setup]
+   ↓
+Operation ID Generated ──────► Immediate HTTP Response (200 OK)
+   ↓
+Queue Job Created
+   ↓
+[Background Processing]
+   ↓
+Progress Updates ────────────► WebSocket Events
+   ↓
+Completion/Failure ──────────► WebSocket Final Event
+   ↓
+[Resource Cleanup]
+```
+
+### Pattern Application Examples
+
+**File Upload & Processing:**
+- HTTP: Accept file, validate format, return upload ID
+- Queue: Parse file, validate data, process batches
+- WebSocket: Batch progress, validation results, completion summary
+
+**Bulk Data Validation:**
+- HTTP: Accept validation request, return validation ID
+- Queue: Execute validation rules across datasets
+- WebSocket: Progress percentage, rule violations, final report
+
+**Data Migration/Transformation:**
+- HTTP: Initiate migration, return migration ID
+- Queue: Transform records, handle dependencies
+- WebSocket: Records processed, errors encountered, completion status
+
+**Complex Calculations:**
+- HTTP: Submit calculation request, return calculation ID
+- Queue: Execute computation, handle intermediate results
+- WebSocket: Calculation progress, partial results, final output
 
 ## Reasoning
 
-### Performance and User Experience
+### Decoupling & Scalability
+- **Decouples client from processing lifecycle**: HTTP response returns immediately, allowing users to continue working while operation executes
+- **Prevents timeout cascades**: Long operations don't hold HTTP connections open, avoiding timeout failures and connection pool exhaustion
+- **Horizontal scaling capability**: Queue workers can be added independently of API servers, allowing targeted scaling for processing bottlenecks
+- **Load distribution**: Redis-backed queue distributes work across multiple workers automatically
 
-Interactions like filtering and sorting are executed instantly in the browser, eliminating round trips to the server and improving responsiveness.
-Users control when and how data is retrieved, reducing backend load and improving perceived speed.
-### Simplicity
+### User Experience
+- **Immediate acknowledgment**: Users get instant feedback that their operation was accepted
+- **Real-time visibility**: Continuous progress updates reduce anxiety and uncertainty during long operations
+- **Resumable operations**: Users can disconnect and reconnect; progress state is maintained server-side
+- **Detailed feedback**: Granular progress and error information helps users understand what's happening
 
-Reduces complexity in the frontend-to-backend interaction model.
-Decreases backend logic for grid state handling.
-Encourages standardization of query patterns across endpoints.
-### Scalable Pagination
+### Reliability & Resilience
+- **Automatic retry mechanisms**: BullMQ provides built-in retry logic for transient failures
+- **Job persistence**: Operations survive server restarts; Redis stores job state
+- **Error isolation**: Failed operations don't crash the API server
+- **Resource cleanup**: Systematic cleanup on success or failure prevents resource leaks
+- **Observability**: Operation IDs correlate events across all system layers
 
-Using offset and limit enables scalable data retrieval while avoiding hard failures due to record caps.
-Providing metadata like nextPageUrl and totalRecords gives clients full control if they need to fetch more data explicitly.
----
+### Developer Experience
+- **Consistent pattern**: Same architecture applies to all LROs across modules
+- **Clear separation of concerns**: HTTP for initiation, WebSocket for communication, Queue for execution
+- **Testable components**: Each layer can be tested independently
+- **Reusable infrastructure**: Queue workers, WebSocket handlers, and HTTP controllers follow standard patterns
 
-## REST API Capabilities
+### Trade-offs Accepted
+- **Increased system complexity**: Three-layer architecture requires more infrastructure than simple synchronous approach
+- **Eventual consistency**: Brief delay between initiation and completion
+- **Infrastructure dependencies**: Redis and WebSocket server required
+- **Connection management overhead**: Must handle WebSocket lifecycle (connect, disconnect, reconnect)
 
-Even though grid operations are handled client-side after data retrieval, the REST API will support consistent and standardized pagination, filtering, and sorting behavior:
+## Consequences
 
-### Filtering
+### Positive
+- **Handles operations of any duration**: No artificial limits imposed by HTTP timeouts
+- **Production-ready scalability**: Proven pattern handles high load with horizontal scaling
+- **Enhanced user experience**: Users stay informed throughout operation lifecycle
+- **Flexible application**: Pattern works for uploads, validations, migrations, calculations, and more
+- **Operational visibility**: Complete tracing from initiation through completion
+- **Clean architecture**: Well-defined boundaries between layers
+- **Graceful degradation**: Operations continue even if WebSocket temporarily disconnects
 
-Text fields: Supports equality match (eq)
-Numeric fields: Supports:
-Equality (eq)
-Greater than (gt)
-Less than (lt)
-Range filtering (e.g., min/max or between operators)
-### Sorting
-
-Query parameter format: ?sort=field.asc or ?sort=field.desc
-Multiple sort keys may be supported where applicable.
-### Pagination (Offset-Based)
-
-Default limit: 500
-Supports limit and offset parameters
-The API response includes:
-```json
-{
-  "data": [ /* array of records */ ],
-  "offset": 0,
-  "limit": 500,
-  "totalRecords": 1342,
-  "hasMore": true,
-  "nextPageUrl": "/api/items?offset=500&limit=500",
-  "previousPageUrl": null,
-  "filtersApplied": {
-    "status": "active"
-  },
-  "sort": "createdAt.desc"
-}
-
-Edit
-
-ADR Template
-Document 
-I've created a comprehensive ADR template based on the structure from your example. The template includes all the key sections and provides guidance on what to include in each part:
-
-Header section with title, date, and status
-Context for describing the problem and options considered
-Decision stating what was chosen
-Reasoning explaining why (with subsections for different benefit categories)
-Consequences covering both positive and negative impacts
-Implementation Notes for technical details
-Related Decisions for linking to other ADRs
-References for external sources
-The template uses placeholder text in brackets to guide you on what content to include in each section. You can customize it further based on your team's specific needs or standards.
-
-
-
-
-
-
-
-Architectural Design Record (ADR)
-Title: [Brief descriptive title of the architectural decision]
-Date: [YYYY-MM-DD]
-Status: [Proposed | Accepted | Rejected | Deprecated | Superseded]
-
-Context
-[Describe the situation that requires a decision to be made. Include:]
-
-[What architectural problem or question needs to be addressed?]
-[What are the key factors, constraints, or requirements driving this decision?]
-[What options were considered?]
-[Any relevant background information or system context]
-Decision
-[State the architectural decision that has been made.]
-
-[Include specific details about:]
-
-[What approach will be implemented]
-[Key components or patterns involved]
-[Any specific technical requirements or constraints]
-[Implementation details that are crucial to the decision]
-Reasoning
-[Explain why this decision was made. Include:]
-
-[Benefit Category 1 (e.g., Performance, Maintainability, etc.)]
-[Specific reasoning points]
-[How this decision addresses the identified concerns]
-[Benefit Category 2]
-[Additional reasoning points]
-[Trade-offs considered]
-[Additional Categories as needed]
-[Other factors that influenced the decision]
-[Risks mitigated or accepted]
-Consequences
-[Describe the positive and negative consequences of this decision]
-
-Positive
-[Benefits gained from this approach]
-[Problems solved]
-[Improvements achieved]
-Negative
-[Trade-offs or limitations accepted]
-[New complexities introduced]
-[Technical debt or future considerations]
-Implementation Notes
-[Optional section for specific implementation details, if relevant:]
-
-[Technical specifications]
-[API contracts or interfaces]
-[Configuration requirements]
-[Migration considerations]
-[Example JSON schema, code snippets, or configuration examples can be included here]
-
-Related Decisions
-[Optional section linking to other ADRs:]
-
-[ADR-XXX: Related decision that this builds upon]
-[ADR-YYY: Decision that this supersedes or conflicts with]
-References
-[Optional section for external references:]
-
-[Documentation links]
-[Industry standards or patterns referenced]
-[Research or articles that influenced the decision]
+### Negative
+- **Infrastructure complexity**: Requires Redis, WebSocket server, and queue workers
+- **Development overhead**: More moving parts to develop, test, and debug
+- **Operational burden**: More services to monitor, maintain, and troubleshoot
+- **Learning curve**: Developers must understand async patterns and queue mechanics
+- **Local development complexity**: Full stack requires multiple services running locally
+- **Network reliability dependency**: WebSocket connections can be disrupted by network issues
