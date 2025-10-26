@@ -26,13 +26,13 @@ Implement a middleware-based authorization workflow that validates user access t
 1. **Middleware Layer:** Intercepts all requests in the ARG Web Backend and forwards authorization checks to the Auth service
 2. **JWT Token Processing:** Decodes access tokens to extract UserId for permission lookups
 3. **Database Schema:**
-    `Group` - Stores all groups
-    `Rights` - Stores all rights/permissions
-    `GroupRights` - Maps rights to groups
-    `UserRights` - Stores user-specific right overrides (enable/disable)
-    `UserGroupMapping` - Associates users with groups (many-to-many)
-    `RouterMaster` - Stores all available routes/endpoints
-    `RouteRightsMapping` - Maps routes to required rights (many-to-many)
+    <br> `Group` - Stores all groups
+    <br> `Rights` - Stores all rights/permissions
+    <br> `GroupRights` - Maps rights to groups
+    <br> `UserRights` - Stores user-specific right overrides (enable/disable)
+    <br> `UserGroupMapping` - Associates users with groups (many-to-many)
+    <br> `RouterMaster` - Stores all available routes/endpoints
+    <br> `RouteRightsMapping` - Maps routes to required rights (many-to-many)
 
 4. **Authorization Flow:**
     <br>Middleware sends: Access Token, MetaData, Path URL to Auth service
