@@ -962,26 +962,26 @@
 <ol>
 <li><strong>Middleware Layer:</strong> Intercepts all requests in the ARG Web Backend and forwards authorization checks to the Auth service</li>
 <li><strong>JWT Token Processing:</strong> Decodes access tokens to extract UserId for permission lookups</li>
-<li><strong>Database Schema:</strong></li>
-<li><code>Group</code> - Stores all groups</li>
-<li><code>Rights</code> - Stores all rights/permissions</li>
-<li><code>GroupRights</code> - Maps rights to groups</li>
-<li><code>UserRights</code> - Stores user-specific right overrides (enable/disable)</li>
-<li><code>UserGroupMapping</code> - Associates users with groups (many-to-many)</li>
-<li><code>RouterMaster</code> - Stores all available routes/endpoints</li>
 <li>
-<p><code>RouteRightsMapping</code> - Maps routes to required rights (many-to-many)</p>
+<p><strong>Database Schema:</strong>
+    <code>Group</code> - Stores all groups
+    <code>Rights</code> - Stores all rights/permissions
+    <code>GroupRights</code> - Maps rights to groups
+    <code>UserRights</code> - Stores user-specific right overrides (enable/disable)
+    <code>UserGroupMapping</code> - Associates users with groups (many-to-many)
+    <code>RouterMaster</code> - Stores all available routes/endpoints
+    <code>RouteRightsMapping</code> - Maps routes to required rights (many-to-many)</p>
 </li>
 <li>
-<p><strong>Authorization Flow:</strong></p>
+<p><strong>Authorization Flow:</strong>
+    <br>Middleware sends: Access Token, MetaData, Path URL to Auth service
+    <br>Auth service decodes token to extract UserId
+    <br>System queries UserGroupMapping to get all user's groups
+    <br>Derives rights from GroupRights for all user's groups
+    <br>Applies UserRights overrides (disabled rights are blocked, custom rights are added)
+    <br>Checks RouteRightsMapping to verify if user has required rights for the route
+    <br>Returns authorized/unauthorized response</p>
 </li>
-<li>Middleware sends: Access Token, MetaData, Path URL to Auth service</li>
-<li>Auth service decodes token to extract UserId</li>
-<li>System queries UserGroupMapping to get all user's groups</li>
-<li>Derives rights from GroupRights for all user's groups</li>
-<li>Applies UserRights overrides (disabled rights are blocked, custom rights are added)</li>
-<li>Checks RouteRightsMapping to verify if user has required rights for the route</li>
-<li>Returns authorized/unauthorized response</li>
 </ol>
 <h2 id="reasoning">Reasoning<a class="headerlink" href="#reasoning" title="Permanent link">&para;</a></h2>
 <p><strong>Security &amp; Separation of Concerns</strong>
