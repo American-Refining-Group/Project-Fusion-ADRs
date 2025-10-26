@@ -1,0 +1,1490 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Documentation of process and architecture">
+      
+      
+        <meta name="author" content="American Refining Group">
+      
+      
+        <link rel="canonical" href="https://github.com/Front%20End%20ADR%27s/File%20Upload%20Workflow%20with%20Asynchronous%20Batch%20Processing/">
+      
+      
+        <link rel="prev" href="../Client%20Side%20Grid%20Handling/">
+      
+      
+        <link rel="next" href="../LRO%20Long%20Running%20Operations/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.15">
+    
+    
+      
+        <title>File Upload Workflow with Asynchronous Batch Processing - ARG ERP Architechtual Decison Records</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.342714a4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#context" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="ARG ERP Architechtual Decison Records" class="md-header__button md-logo" aria-label="ARG ERP Architechtual Decison Records" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ARG ERP Architechtual Decison Records
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              File Upload Workflow with Asynchronous Batch Processing
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/American-Refining-Group/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    American-Refining-Group/
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="ARG ERP Architechtual Decison Records" class="md-nav__button md-logo" aria-label="ARG ERP Architechtual Decison Records" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    ARG ERP Architechtual Decison Records
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/American-Refining-Group/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    American-Refining-Group/
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Docs
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Front End ADR's
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Front End ADR's
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Client%20Side%20Grid%20Handling/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Client-Side Grid
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    File Upload Workflow with Asynchronous Batch Processing
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    File Upload Workflow with Asynchronous Batch Processing
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#context" class="md-nav__link">
+    <span class="md-ellipsis">
+      Context
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#decision" class="md-nav__link">
+    <span class="md-ellipsis">
+      Decision
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reasoning" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reasoning
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Reasoning">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#scalability" class="md-nav__link">
+    <span class="md-ellipsis">
+      Scalability
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#user-experience" class="md-nav__link">
+    <span class="md-ellipsis">
+      User Experience
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reliability" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reliability
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#security" class="md-nav__link">
+    <span class="md-ellipsis">
+      Security
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trade-offs-accepted" class="md-nav__link">
+    <span class="md-ellipsis">
+      Trade-offs Accepted
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#consequences" class="md-nav__link">
+    <span class="md-ellipsis">
+      Consequences
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Consequences">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#positive" class="md-nav__link">
+    <span class="md-ellipsis">
+      Positive
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#negative" class="md-nav__link">
+    <span class="md-ellipsis">
+      Negative
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implementation-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Implementation Notes
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Implementation Notes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#file-validation-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      File Validation Pipeline
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#response-schemas" class="md-nav__link">
+    <span class="md-ellipsis">
+      Response Schemas
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#error-response-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      Error Response Types
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-processing-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      Data Processing Pipeline
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#monitoring-observability" class="md-nav__link">
+    <span class="md-ellipsis">
+      Monitoring &amp; Observability
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#module-specific-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Module-Specific Configuration
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-decisions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Related Decisions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LRO%20Long%20Running%20Operations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Long Running Operations - LRO's
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    REST API ADR's
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            REST API ADR's
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../REST%20API%20ADR%27s/Reporting%20System%20Modernization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Legacy AS/400 Reporting System Modernization
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    RPG Legacy ADR's
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            RPG Legacy ADR's
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../RPG%20Legacy%20ADR%27s/RPG%20Development%20Standards/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    RPG Program and Database File Development Standards
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Security ADR's
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Security ADR's
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Security%20ADR%27s/Security%20End%202%20End/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Authentication and Authorization
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Testing ARD's
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Testing ARD's
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Testing%20ARD%27s/UAT%20Process/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    User Acceptance Testing (UAT) Process
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#context" class="md-nav__link">
+    <span class="md-ellipsis">
+      Context
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#decision" class="md-nav__link">
+    <span class="md-ellipsis">
+      Decision
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reasoning" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reasoning
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Reasoning">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#scalability" class="md-nav__link">
+    <span class="md-ellipsis">
+      Scalability
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#user-experience" class="md-nav__link">
+    <span class="md-ellipsis">
+      User Experience
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reliability" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reliability
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#security" class="md-nav__link">
+    <span class="md-ellipsis">
+      Security
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trade-offs-accepted" class="md-nav__link">
+    <span class="md-ellipsis">
+      Trade-offs Accepted
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#consequences" class="md-nav__link">
+    <span class="md-ellipsis">
+      Consequences
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Consequences">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#positive" class="md-nav__link">
+    <span class="md-ellipsis">
+      Positive
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#negative" class="md-nav__link">
+    <span class="md-ellipsis">
+      Negative
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implementation-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Implementation Notes
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Implementation Notes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#file-validation-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      File Validation Pipeline
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#response-schemas" class="md-nav__link">
+    <span class="md-ellipsis">
+      Response Schemas
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#error-response-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      Error Response Types
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-processing-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      Data Processing Pipeline
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#monitoring-observability" class="md-nav__link">
+    <span class="md-ellipsis">
+      Monitoring &amp; Observability
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#module-specific-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Module-Specific Configuration
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-decisions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Related Decisions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+  <h1>File Upload Workflow with Asynchronous Batch Processing</h1>
+
+<p><strong>Title:</strong> File Upload Workflow with Asynchronous Batch Processing<br />
+<strong>Date:</strong> 2025-10-26<br />
+<strong>Status:</strong> Accepted</p>
+<h2 id="context">Context<a class="headerlink" href="#context" title="Permanent link">&para;</a></h2>
+<p>The application requires a robust file upload system that can handle large Excel/CSV files containing business data. The system must address several key challenges:</p>
+<p><strong>Key Requirements:</strong>
+- Process large files (up to 10MB) containing structured business data
+- Validate file structure and data integrity before processing
+- Provide real-time feedback to users during long-running operations
+- Handle thousands of records efficiently without HTTP timeouts
+- Ensure data accuracy with proper Excel date and accounting number parsing
+- Maintain security through proper authentication and user isolation</p>
+<p><strong>Constraints:</strong>
+- HTTP request timeout limitations for synchronous processing
+- Need for immediate user feedback while processing continues
+- File format complexity (Excel serial dates, accounting number formats)
+- Resource cleanup requirements for temporary file storage</p>
+<p><strong>Options Considered:</strong>
+1. <strong>Synchronous HTTP-only processing</strong> - Simple but causes timeouts on large files
+2. <strong>Pure asynchronous processing with polling</strong> - Requires constant client polling, inefficient
+3. <strong>Hybrid HTTP/WebSocket with queue-based processing</strong> - Balances immediate feedback with async processing</p>
+<h2 id="decision">Decision<a class="headerlink" href="#decision" title="Permanent link">&para;</a></h2>
+<p>We will implement a <strong>hybrid HTTP/WebSocket architecture with asynchronous batch processing using BullMQ</strong> for the file upload workflow.</p>
+<p><strong>Key Components:</strong></p>
+<ol>
+<li><strong>HTTP Layer (Synchronous)</strong></li>
+<li>Endpoint: <code>POST /{module}/upload</code></li>
+<li>Protocol: HTTP with multipart/form-data</li>
+<li>
+<p>Handles: File upload, validation, and initial processing setup</p>
+</li>
+<li>
+<p><strong>WebSocket Layer (Asynchronous)</strong></p>
+</li>
+<li>Protocol: WebSocket with Socket.IO</li>
+<li>Authentication: JWT token-based</li>
+<li>
+<p>Handles: Real-time progress updates and final results</p>
+</li>
+<li>
+<p><strong>Queue Layer (Background Processing)</strong></p>
+</li>
+<li>Technology: BullMQ with Redis</li>
+<li>Handles: Asynchronous batch processing of uploaded data</li>
+</ol>
+<p><strong>Processing Workflow:</strong></p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span></pre></div></td><td class="code"><div><pre><span></span><code>1. File Upload &amp; Validation (HTTP)
+   ↓
+2. Data Parsing &amp; Batch Creation
+   ↓
+3. Queue Job Creation (Parent + Child Jobs)
+   ↓
+4. Asynchronous Batch Processing (BullMQ)
+   ↓
+5. Real-time Updates (WebSocket)
+   ↓
+6. Final Summary &amp; Cleanup
+</code></pre></div></td></tr></table></div>
+<p><strong>Technical Specifications:</strong>
+- File types supported: .xlsx, .xls, .csv
+- Maximum file size: 10MB (configurable)
+- Storage location: <code>uploads/csv/{MODULE_NAME}/</code>
+- Upload ID format: <code>{PREFIX}-{timestamp}-{uuid}</code>
+- User-specific WebSocket rooms: <code>user-{userIdentifier}</code>
+- Job structure: Parent job orchestrating multiple child batch jobs</p>
+<h2 id="reasoning">Reasoning<a class="headerlink" href="#reasoning" title="Permanent link">&para;</a></h2>
+<h3 id="scalability">Scalability<a class="headerlink" href="#scalability" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Asynchronous processing prevents HTTP timeouts</strong>: By decoupling file upload from data processing, large files can be processed without hitting typical 30-60 second HTTP timeout limits</li>
+<li><strong>Batch processing handles large datasets efficiently</strong>: Configurable batch sizes allow tuning for optimal memory usage and processing speed</li>
+<li><strong>Redis-backed queue supports horizontal scaling</strong>: Multiple worker processes can consume jobs from the same queue, enabling easy scaling as load increases</li>
+</ul>
+<h3 id="user-experience">User Experience<a class="headerlink" href="#user-experience" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Immediate upload confirmation</strong>: Users receive instant HTTP response confirming file acceptance, preventing perceived delays</li>
+<li><strong>Real-time progress updates</strong>: WebSocket events provide continuous feedback on processing status, reducing user anxiety during long operations</li>
+<li><strong>Comprehensive error reporting</strong>: Specific, actionable error messages at multiple validation levels help users correct issues quickly</li>
+</ul>
+<h3 id="reliability">Reliability<a class="headerlink" href="#reliability" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Automatic resource cleanup</strong>: Temporary files are removed after processing (success or failure), preventing disk space exhaustion</li>
+<li><strong>Robust error handling</strong>: Multi-level validation catches issues early; processing errors don't crash the system</li>
+<li><strong>Job tracking and monitoring</strong>: Parent/child job structure enables detailed observability and debugging</li>
+</ul>
+<h3 id="security">Security<a class="headerlink" href="#security" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>JWT-based authentication for both protocols</strong>: Consistent authentication across HTTP and WebSocket prevents unauthorized access</li>
+<li><strong>File type and size validation</strong>: Prevents malicious file uploads and resource exhaustion attacks</li>
+<li><strong>User-specific data isolation</strong>: WebSocket rooms ensure users only receive updates for their own uploads</li>
+</ul>
+<h3 id="trade-offs-accepted">Trade-offs Accepted<a class="headerlink" href="#trade-offs-accepted" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Increased system complexity</strong>: Three-layer architecture (HTTP/WebSocket/Queue) requires more infrastructure and monitoring compared to simple synchronous approach</li>
+<li><strong>Redis dependency</strong>: Adds operational overhead of maintaining Redis instance</li>
+<li><strong>WebSocket connection management</strong>: Requires handling connection lifecycle, reconnection logic, and authentication</li>
+</ul>
+<h2 id="consequences">Consequences<a class="headerlink" href="#consequences" title="Permanent link">&para;</a></h2>
+<h3 id="positive">Positive<a class="headerlink" href="#positive" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Handles files of any size within limits</strong>: Large files with thousands of records process smoothly without timeouts</li>
+<li><strong>Excellent user experience</strong>: Users can navigate away and return; progress is preserved and resumable</li>
+<li><strong>Production-ready scalability</strong>: Can handle increased load by adding queue workers horizontally</li>
+<li><strong>Detailed observability</strong>: Upload IDs correlate actions across all system layers for effective debugging</li>
+<li><strong>Clean separation of concerns</strong>: HTTP handles upload, WebSocket handles communication, Queue handles processing</li>
+<li><strong>Reusable pattern</strong>: Architecture can be applied to multiple modules requiring file upload functionality</li>
+</ul>
+<h3 id="negative">Negative<a class="headerlink" href="#negative" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Increased infrastructure complexity</strong>: Requires Redis server, WebSocket server, and queue workers in addition to standard HTTP API</li>
+<li><strong>More difficult local development</strong>: Developers need Redis and multiple processes running to test the full workflow</li>
+<li><strong>WebSocket connection management</strong>: Must handle disconnections, reconnections, and stale connections</li>
+<li><strong>Eventual consistency model</strong>: Brief delay between upload confirmation and processing completion may confuse some users</li>
+<li><strong>Higher operational overhead</strong>: More services to monitor, log aggregation across multiple components required</li>
+</ul>
+<h2 id="implementation-notes">Implementation Notes<a class="headerlink" href="#implementation-notes" title="Permanent link">&para;</a></h2>
+<h3 id="file-validation-pipeline">File Validation Pipeline<a class="headerlink" href="#file-validation-pipeline" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="mf">1.</span><span class="w"> </span><span class="nx">File</span><span class="w"> </span><span class="kr">type</span><span class="w"> </span><span class="nx">validation</span><span class="o">:</span><span class="w"> </span><span class="kt">.xlsx</span><span class="p">,</span><span class="w"> </span><span class="p">.</span><span class="nx">xls</span><span class="p">,</span><span class="w"> </span><span class="p">.</span><span class="nx">csv</span><span class="w"> </span><span class="nx">only</span>
+<span class="mf">2.</span><span class="w"> </span><span class="nx">File</span><span class="w"> </span><span class="nx">size</span><span class="w"> </span><span class="nx">validation</span><span class="o">:</span><span class="w"> </span><span class="kt">Configurable</span><span class="w"> </span><span class="nx">maximum</span><span class="w"> </span><span class="p">(</span><span class="k">default</span><span class="w"> </span><span class="mf">10</span><span class="nx">MB</span><span class="p">)</span>
+<span class="mf">3.</span><span class="w"> </span><span class="nx">Header</span><span class="w"> </span><span class="nx">validation</span><span class="o">:</span><span class="w"> </span><span class="kt">Exact</span><span class="w"> </span><span class="nx">column</span><span class="w"> </span><span class="nx">order</span><span class="w"> </span><span class="nx">and</span><span class="w"> </span><span class="nx">count</span><span class="w"> </span><span class="nx">matching</span>
+<span class="mf">4.</span><span class="w"> </span><span class="nx">Data</span><span class="w"> </span><span class="nx">validation</span><span class="o">:</span><span class="w"> </span><span class="kt">At</span><span class="w"> </span><span class="nx">least</span><span class="w"> </span><span class="mf">1</span><span class="w"> </span><span class="nx">non</span><span class="o">-</span><span class="nx">empty</span><span class="w"> </span><span class="nx">row</span><span class="w"> </span><span class="nx">after</span><span class="w"> </span><span class="nx">header</span>
+<span class="mf">5.</span><span class="w"> </span><span class="nx">Format</span><span class="w"> </span><span class="nx">validation</span><span class="o">:</span><span class="w"> </span><span class="kt">Excel</span><span class="w"> </span><span class="nx">date</span><span class="w"> </span><span class="nx">conversion</span><span class="p">,</span><span class="w"> </span><span class="nx">accounting</span><span class="w"> </span><span class="kt">number</span><span class="w"> </span><span class="nx">parsing</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="response-schemas">Response Schemas<a class="headerlink" href="#response-schemas" title="Permanent link">&para;</a></h3>
+<p><strong>HTTP Success Response:</strong>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span>
+<span class="normal">8</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">interface</span><span class="w"> </span><span class="nx">FileUploadResponseDto</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">message</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span><span class="w">           </span><span class="c1">// &quot;File accepted, split into batches&quot;</span>
+<span class="w">  </span><span class="nx">uploadId</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span><span class="w">         </span><span class="c1">// &quot;{PREFIX}-{timestamp}-{uuid}&quot;</span>
+<span class="w">  </span><span class="nx">totalRecords</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span><span class="w">     </span><span class="c1">// Total records processed</span>
+<span class="w">  </span><span class="nx">totalBatches</span><span class="o">:</span><span class="w"> </span><span class="kt">number</span><span class="p">;</span><span class="w">     </span><span class="c1">// Number of batches created</span>
+<span class="w">  </span><span class="nx">parentJobId</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span><span class="w">      </span><span class="c1">// Parent job ID for tracking</span>
+<span class="w">  </span><span class="nx">childJobIds</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">[];</span><span class="w">    </span><span class="c1">// Array of child job IDs</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div></p>
+<p><strong>WebSocket Batch Progress:</strong>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="s2">&quot;event&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;batch-progress&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="s2">&quot;data&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="s2">&quot;uploadId&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;UPLOAD-1234567890-uuid&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;batchId&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;batch-1&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;status&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;completed&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;processed&quot;</span><span class="o">:</span><span class="w"> </span><span class="mf">5</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;errors&quot;</span><span class="o">:</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;warnings&quot;</span><span class="o">:</span><span class="w"> </span><span class="mf">0</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div></p>
+<p><strong>WebSocket Final Summary:</strong>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="s2">&quot;event&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;upload-complete&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="s2">&quot;data&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="s2">&quot;uploadId&quot;</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;UPLOAD-1234567890-uuid&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;summary&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="s2">&quot;totalProcessed&quot;</span><span class="o">:</span><span class="w"> </span><span class="mf">10</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;successCount&quot;</span><span class="o">:</span><span class="w"> </span><span class="mf">7</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;errorCount&quot;</span><span class="o">:</span><span class="w"> </span><span class="mf">2</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;warningCount&quot;</span><span class="o">:</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;additionalMetrics&quot;</span><span class="o">:</span><span class="w"> </span><span class="p">{}</span><span class="w">  </span><span class="c1">// Module-specific metrics</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div></p>
+<h3 id="error-response-types">Error Response Types<a class="headerlink" href="#error-response-types" title="Permanent link">&para;</a></h3>
+<p><strong>File Validation Error (400):</strong>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;statusCode&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">400</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Only Excel (.xlsx, .xls) and CSV files are allowed&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;error&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Bad Request&quot;</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div></p>
+<p><strong>Header Validation Error (400):</strong>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;statusCode&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">400</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Header mismatch at column 3. Expected &#39;COLUMN_NAME&#39; but found &#39;ColumnName&#39;&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;error&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Bad Request&quot;</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div></p>
+<p><strong>Data Validation Error (400):</strong>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;statusCode&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">400</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;File must contain at least 1 non-empty data row(s) after the header row. Found only 0 non-empty data row(s).&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;error&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Bad Request&quot;</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div></p>
+<p><strong>Authentication Error (400):</strong>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;statusCode&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">400</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;User authentication required&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;error&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Bad Request&quot;</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div></p>
+<h3 id="data-processing-pipeline">Data Processing Pipeline<a class="headerlink" href="#data-processing-pipeline" title="Permanent link">&para;</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="mf">1.</span><span class="w"> </span><span class="nx">parseFile</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">Extract</span><span class="w"> </span><span class="nx">data</span><span class="w"> </span><span class="kd">with</span><span class="w"> </span><span class="nx">proper</span><span class="w"> </span><span class="nx">formatting</span>
+<span class="mf">2.</span><span class="w"> </span><span class="nx">filterAndNormalizeRows</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">Clean</span><span class="w"> </span><span class="nx">and</span><span class="w"> </span><span class="nx">filter</span><span class="w"> </span><span class="nx">empty</span><span class="w"> </span><span class="nx">rows</span>
+<span class="mf">3.</span><span class="w"> </span><span class="nx">chunkArray</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">Split</span><span class="w"> </span><span class="nx">into</span><span class="w"> </span><span class="nx">configurable</span><span class="w"> </span><span class="nx">batches</span>
+<span class="mf">4.</span><span class="w"> </span><span class="nx">createQueueJobs</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">Create</span><span class="w"> </span><span class="nx">parent</span><span class="o">/</span><span class="nx">child</span><span class="w"> </span><span class="nx">job</span><span class="w"> </span><span class="nx">structure</span>
+<span class="mf">5.</span><span class="w"> </span><span class="nx">processInBackground</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">Execute</span><span class="w"> </span><span class="nx">batch</span><span class="w"> </span><span class="nx">processing</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="monitoring-observability">Monitoring &amp; Observability<a class="headerlink" href="#monitoring-observability" title="Permanent link">&para;</a></h3>
+<p><strong>Logging Strategy:</strong>
+- Structured logging with upload IDs for correlation
+- Process duration tracking at each stage
+- Error logging with full stack traces</p>
+<p><strong>Key Metrics:</strong>
+- Upload success/failure rates by module
+- Processing time per batch
+- Queue depth and processing rates
+- WebSocket connection count and stability</p>
+<p><strong>Tracing:</strong>
+- Upload ID correlation across HTTP/WebSocket/Queue layers
+- Job ID tracking for debugging
+- User context preservation throughout workflow</p>
+<h3 id="module-specific-configuration">Module-Specific Configuration<a class="headerlink" href="#module-specific-configuration" title="Permanent link">&para;</a></h3>
+<p>Each module can customize:
+- Upload ID prefix (e.g., "CC" for Clear Checks, "INV" for Invoices)
+- Expected file headers and column order
+- Batch size for processing
+- Module-specific validation rules
+- Custom business logic for data processing
+- Summary metrics format</p>
+<h2 id="related-decisions">Related Decisions<a class="headerlink" href="#related-decisions" title="Permanent link">&para;</a></h2>
+<p>[To be added as related ADRs are created for specific module implementations]</p>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>BullMQ Documentation</strong>: https://docs.bullmq.io/</li>
+<li><strong>Socket.IO Documentation</strong>: https://socket.io/docs/</li>
+<li><strong>Excel Serial Date Format</strong>: Microsoft Excel date system documentation</li>
+<li><strong>Multipart Form Data Specification</strong>: RFC 7578</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "content.tabs", "navigation.sections", "search.suggest", "search.highlight", "palette.toggle"], "search": "../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.56ea9cef.min.js"></script>
+      
+    
+  </body>
+</html>

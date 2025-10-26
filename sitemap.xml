@@ -2,34 +2,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://github.com/</loc>
-         <lastmod>2025-10-23</lastmod>
+         <lastmod>2025-10-26</lastmod>
     </url>
     <url>
          <loc>https://github.com/Front%20End%20ADR%27s/Client%20Side%20Grid%20Handling/</loc>
-         <lastmod>2025-10-23</lastmod>
+         <lastmod>2025-10-26</lastmod>
     </url>
     <url>
-         <loc>https://github.com/Front%20End%20ADR%27s/ClientSideDataGrid/</loc>
-         <lastmod>2025-10-23</lastmod>
+         <loc>https://github.com/Front%20End%20ADR%27s/File%20Upload%20Workflow%20with%20Asynchronous%20Batch%20Processing/</loc>
+         <lastmod>2025-10-26</lastmod>
     </url>
     <url>
          <loc>https://github.com/Front%20End%20ADR%27s/LRO%20Long%20Running%20Operations/</loc>
-         <lastmod>2025-10-23</lastmod>
+         <lastmod>2025-10-26</lastmod>
     </url>
     <url>
          <loc>https://github.com/REST%20API%20ADR%27s/Reporting%20System%20Modernization/</loc>
-         <lastmod>2025-10-23</lastmod>
+         <lastmod>2025-10-26</lastmod>
     </url>
     <url>
          <loc>https://github.com/RPG%20Legacy%20ADR%27s/RPG%20Development%20Standards/</loc>
-         <lastmod>2025-10-23</lastmod>
+         <lastmod>2025-10-26</lastmod>
     </url>
     <url>
          <loc>https://github.com/Security%20ADR%27s/Security%20End%202%20End/</loc>
-         <lastmod>2025-10-23</lastmod>
+         <lastmod>2025-10-26</lastmod>
     </url>
     <url>
          <loc>https://github.com/Testing%20ARD%27s/UAT%20Process/</loc>
-         <lastmod>2025-10-23</lastmod>
+         <lastmod>2025-10-26</lastmod>
     </url>
 </urlset>
