@@ -2,38 +2,250 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://github.com/</loc>
-         <lastmod>2025-10-26</lastmod>
+         <lastmod>2025-12-02</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/Debugging%20Documentation/DEBUGGING/</loc>
+         <lastmod>2025-12-02</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/Debugging%20Documentation/errors/</loc>
+         <lastmod>2025-12-02</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/Debugging%20Documentation/errors/500-internal-server-errors/</loc>
+         <lastmod>2025-12-02</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/Debugging%20Documentation/errors/502-bad-gateway/</loc>
+         <lastmod>2025-12-02</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/Debugging%20Documentation/errors/503-service-unavailable/</loc>
+         <lastmod>2025-12-02</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/Debugging%20Documentation/errors/504-gateway-timeouts/</loc>
+         <lastmod>2025-12-02</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/Debugging%20Documentation/errors/db2-connection-failures/</loc>
+         <lastmod>2025-12-02</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/Debugging%20Documentation/workflows/</loc>
+         <lastmod>2025-12-02</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/Debugging%20Documentation/workflows/ibmi-tooling/</loc>
+         <lastmod>2025-12-02</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/Debugging%20Documentation/workflows/rapid-triage/</loc>
+         <lastmod>2025-12-02</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/Debugging%20Documentation/workflows/vscode-debugging/</loc>
+         <lastmod>2025-12-02</lastmod>
     </url>
     <url>
          <loc>https://github.com/Front%20End%20ADR%27s/Client%20Side%20Grid%20Handling/</loc>
-         <lastmod>2025-10-26</lastmod>
+         <lastmod>2025-12-02</lastmod>
     </url>
     <url>
          <loc>https://github.com/Front%20End%20ADR%27s/File%20Upload%20Workflow/</loc>
-         <lastmod>2025-10-26</lastmod>
+         <lastmod>2025-12-02</lastmod>
     </url>
     <url>
          <loc>https://github.com/Front%20End%20ADR%27s/LRO%20Long%20Running%20Operations/</loc>
-         <lastmod>2025-10-26</lastmod>
+         <lastmod>2025-12-02</lastmod>
     </url>
     <url>
          <loc>https://github.com/Front%20End%20ADR%27s/Uproccesed%20Records%20Response/</loc>
-         <lastmod>2025-10-26</lastmod>
+         <lastmod>2025-12-02</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/Process%20Documentation/</loc>
+         <lastmod>2025-12-02</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/Process%20Documentation/approve-qa-test-cases-from-acceptance-criteria/</loc>
+         <lastmod>2025-12-02</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/Process%20Documentation/code-review-nodejs/</loc>
+         <lastmod>2025-12-02</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/Process%20Documentation/code-review-rpg/</loc>
+         <lastmod>2025-12-02</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/Process%20Documentation/feature-change-requests/</loc>
+         <lastmod>2025-12-02</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/Process%20Documentation/integrations-with-external-apps/</loc>
+         <lastmod>2025-12-02</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/Process%20Documentation/issues-after-deployment/</loc>
+         <lastmod>2025-12-02</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/Process%20Documentation/legacy-table-to-api-resource-mapping/</loc>
+         <lastmod>2025-12-02</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/Process%20Documentation/own-go-live-tasks/</loc>
+         <lastmod>2025-12-02</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/Process%20Documentation/rpg-program-signoff-syntax-compile/</loc>
+         <lastmod>2025-12-02</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/Process%20Documentation/rpg-testing-e2e/</loc>
+         <lastmod>2025-12-02</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/Process%20Documentation/sign-off-on-uat-stage/</loc>
+         <lastmod>2025-12-02</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/Process%20Documentation/sign-off-user-stories-and-brd/</loc>
+         <lastmod>2025-12-02</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/Process%20Documentation/transfer-rpg-programs-to-power-10/</loc>
+         <lastmod>2025-12-02</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/Process%20Documentation/examples/</loc>
+         <lastmod>2025-12-02</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/Process%20Documentation/examples/approve-qa-test-cases-from-acceptance-criteria/</loc>
+         <lastmod>2025-12-02</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/Process%20Documentation/examples/code-review-nodejs/</loc>
+         <lastmod>2025-12-02</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/Process%20Documentation/examples/code-review-rpg/</loc>
+         <lastmod>2025-12-02</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/Process%20Documentation/examples/feature-change-requests/</loc>
+         <lastmod>2025-12-02</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/Process%20Documentation/examples/integrations-with-external-apps/</loc>
+         <lastmod>2025-12-02</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/Process%20Documentation/examples/issues-after-deployment/</loc>
+         <lastmod>2025-12-02</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/Process%20Documentation/examples/legacy-table-to-api-resource-mapping/</loc>
+         <lastmod>2025-12-02</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/Process%20Documentation/examples/own-go-live-tasks/</loc>
+         <lastmod>2025-12-02</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/Process%20Documentation/examples/rpg-program-signoff-syntax-compile/</loc>
+         <lastmod>2025-12-02</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/Process%20Documentation/examples/rpg-testing-e2e/</loc>
+         <lastmod>2025-12-02</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/Process%20Documentation/examples/sign-off-on-uat-stage/</loc>
+         <lastmod>2025-12-02</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/Process%20Documentation/examples/sign-off-user-stories-and-brd/</loc>
+         <lastmod>2025-12-02</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/Process%20Documentation/examples/transfer-rpg-programs-to-power-10/</loc>
+         <lastmod>2025-12-02</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/Process%20Documentation/tools/</loc>
+         <lastmod>2025-12-02</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/Process%20Documentation/tools/approve-qa-test-cases-from-acceptance-criteria/</loc>
+         <lastmod>2025-12-02</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/Process%20Documentation/tools/code-review-nodejs/</loc>
+         <lastmod>2025-12-02</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/Process%20Documentation/tools/code-review-rpg/</loc>
+         <lastmod>2025-12-02</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/Process%20Documentation/tools/feature-change-requests/</loc>
+         <lastmod>2025-12-02</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/Process%20Documentation/tools/integrations-with-external-apps/</loc>
+         <lastmod>2025-12-02</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/Process%20Documentation/tools/issues-after-deployment/</loc>
+         <lastmod>2025-12-02</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/Process%20Documentation/tools/legacy-table-to-api-resource-mapping/</loc>
+         <lastmod>2025-12-02</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/Process%20Documentation/tools/own-go-live-tasks/</loc>
+         <lastmod>2025-12-02</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/Process%20Documentation/tools/rpg-program-signoff-syntax-compile/</loc>
+         <lastmod>2025-12-02</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/Process%20Documentation/tools/rpg-testing-e2e/</loc>
+         <lastmod>2025-12-02</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/Process%20Documentation/tools/sign-off-on-uat-stage/</loc>
+         <lastmod>2025-12-02</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/Process%20Documentation/tools/sign-off-user-stories-and-brd/</loc>
+         <lastmod>2025-12-02</lastmod>
+    </url>
+    <url>
+         <loc>https://github.com/Process%20Documentation/tools/transfer-rpg-programs-to-power-10/</loc>
+         <lastmod>2025-12-02</lastmod>
     </url>
     <url>
          <loc>https://github.com/REST%20API%20ADR%27s/Reporting%20System%20Modernization/</loc>
-         <lastmod>2025-10-26</lastmod>
+         <lastmod>2025-12-02</lastmod>
     </url>
     <url>
          <loc>https://github.com/RPG%20Legacy%20ADR%27s/RPG%20Development%20Standards/</loc>
-         <lastmod>2025-10-26</lastmod>
+         <lastmod>2025-12-02</lastmod>
     </url>
     <url>
          <loc>https://github.com/Security%20ADR%27s/Authorization%20Workflow%20/</loc>
-         <lastmod>2025-10-26</lastmod>
+         <lastmod>2025-12-02</lastmod>
     </url>
     <url>
          <loc>https://github.com/Testing%20ARD%27s/UAT%20Process/</loc>
-         <lastmod>2025-10-26</lastmod>
+         <lastmod>2025-12-02</lastmod>
     </url>
 </urlset>

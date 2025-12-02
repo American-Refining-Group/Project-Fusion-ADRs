@@ -1,0 +1,2639 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Documentation of process and architecture">
+      
+      
+        <meta name="author" content="American Refining Group">
+      
+      
+        <link rel="canonical" href="https://github.com/Debugging%20Documentation/DEBUGGING/">
+      
+      
+        <link rel="prev" href="../..">
+      
+      
+        <link rel="next" href="../errors/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.15">
+    
+    
+      
+        <title>Debugging Node ↔ RPG ↔ IBM i Integrations - ARG ERP Architechtual Decison Records</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.342714a4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#debugging-node-rpg-ibm-i-integrations" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="ARG ERP Architechtual Decison Records" class="md-header__button md-logo" aria-label="ARG ERP Architechtual Decison Records" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ARG ERP Architechtual Decison Records
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Debugging Node ↔ RPG ↔ IBM i Integrations
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/American-Refining-Group/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    American-Refining-Group/
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="ARG ERP Architechtual Decison Records" class="md-nav__button md-logo" aria-label="ARG ERP Architechtual Decison Records" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    ARG ERP Architechtual Decison Records
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/American-Refining-Group/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    American-Refining-Group/
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Docs
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Debugging Documentation
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Debugging Documentation
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Debugging Node ↔ RPG ↔ IBM i Integrations
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Debugging Node ↔ RPG ↔ IBM i Integrations
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-nodejs-framework-map" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Node.js Framework Map
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-ibm-i-connectivity-driver-layer" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. IBM i Connectivity &amp; Driver Layer
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. IBM i Connectivity &amp; Driver Layer">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagnosing-connection-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagnosing connection errors
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-sql-diagnostics-model-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. SQL Diagnostics &amp; Model Issues
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-bullbullmq-job-pipelines" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Bull/BullMQ Job Pipelines
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-spooled-file-output-queue-diagnostics" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Spooled File &amp; Output Queue Diagnostics
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Spooled File &amp; Output Queue Diagnostics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#debugging-spooloutput-queue-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      Debugging spool/output queue issues
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-end-to-end-checklist-for-node-rpg-ibm-i-bugs" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. End-to-End Checklist for Node ↔ RPG ↔ IBM i Bugs
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Errors
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            Errors
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../errors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Error Playbooks
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../errors/500-internal-server-errors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    500 Internal Server Errors – Diagnostic Playbook
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../errors/502-bad-gateway/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    502 Bad Gateway – Diagnostic Playbook
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../errors/503-service-unavailable/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    503 Service Unavailable – Diagnostic Playbook
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../errors/504-gateway-timeouts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    504 Gateway Timeouts – Diagnostic Playbook
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../errors/db2-connection-failures/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    DB2 Connection Failures (SQLSTATE 08001/08004) – Diagnostic Playbook
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Workflows
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            Workflows
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../workflows/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Debugging Workflows Index
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../workflows/ibmi-tooling/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    IBM Navigator, ACS, Data Studio, and 5250 Toolkit
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../workflows/rapid-triage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Rapid Incident Triage (Full Stack)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../workflows/vscode-debugging/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    VS Code ↔ NestJS ↔ IBM i Bridge
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Front End ADR's
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Front End ADR's
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Front%20End%20ADR%27s/Client%20Side%20Grid%20Handling/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Client-Side Grid
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Front%20End%20ADR%27s/File%20Upload%20Workflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    File Upload Workflow
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Front%20End%20ADR%27s/LRO%20Long%20Running%20Operations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    LRO Long Running Operations
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Front%20End%20ADR%27s/Uproccesed%20Records%20Response/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Upload Status Response Object Documentation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Process Documentation
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Process Documentation
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Delivery, QA, and IBM i Playbooks
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/approve-qa-test-cases-from-acceptance-criteria/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Approve QA Test Cases from Acceptance Criteria
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/code-review-nodejs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Code Review – Node.js
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/code-review-rpg/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Code Review – RPG
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/feature-change-requests/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Feature Change Requests
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/integrations-with-external-apps/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Integrations with External Apps
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/issues-after-deployment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Issues After Deployment
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/legacy-table-to-api-resource-mapping/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Legacy Table to API Resource Mapping
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/own-go-live-tasks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Own Go-Live Tasks
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/rpg-program-signoff-syntax-compile/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    RPG Program Signoff (Syntax/Compile)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/rpg-testing-e2e/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    RPG Testing End-to-End
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/sign-off-on-uat-stage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Sign Off on UAT (Stage)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/sign-off-user-stories-and-brd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Sign Off User Stories and BRD
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/transfer-rpg-programs-to-power-10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Transfer RPG Programs to Power 10
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_15" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_15" id="__nav_4_15_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Examples
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_15_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_15">
+            <span class="md-nav__icon md-icon"></span>
+            Examples
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Delivery Examples – End-to-End Runs
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/examples/approve-qa-test-cases-from-acceptance-criteria/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Example – Approve QA Test Cases from Acceptance Criteria
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/examples/code-review-nodejs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Example – Code Review (Node.js)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/examples/code-review-rpg/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Example – Code Review (RPG)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/examples/feature-change-requests/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Example – Feature Change Requests
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/examples/integrations-with-external-apps/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Example – Integrations with External Apps
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/examples/issues-after-deployment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Example – Issues After Deployment
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/examples/legacy-table-to-api-resource-mapping/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Example – Legacy Table to API Resource Mapping
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/examples/own-go-live-tasks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Example – Own Go-Live Tasks
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/examples/rpg-program-signoff-syntax-compile/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Example – RPG Program Signoff (Syntax/Compile)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/examples/rpg-testing-e2e/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Example – RPG Testing End-to-End
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/examples/sign-off-on-uat-stage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Example – Sign Off on UAT (Stage)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/examples/sign-off-user-stories-and-brd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Example – Sign Off User Stories and BRD
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/examples/transfer-rpg-programs-to-power-10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Example – Transfer RPG Programs to Power 10
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_16" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_16" id="__nav_4_16_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Tools
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_16_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_16">
+            <span class="md-nav__icon md-icon"></span>
+            Tools
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Tool-Specific Delivery Playbooks
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/tools/approve-qa-test-cases-from-acceptance-criteria/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Approve QA Test Cases – Tool Walkthrough
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/tools/code-review-nodejs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Code Review – Node.js (Tool Playbook)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/tools/code-review-rpg/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Code Review – RPG (Tool Playbook)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/tools/feature-change-requests/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Feature Change Requests – Tool Playbook
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/tools/integrations-with-external-apps/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Integrations with External Apps – Tool Walkthrough
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/tools/issues-after-deployment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Issues After Deployment – Tool Playbook
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/tools/legacy-table-to-api-resource-mapping/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Legacy Table to API Resource Mapping – Tool Walkthrough
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/tools/own-go-live-tasks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Own Go-Live Tasks – Tool Playbook
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/tools/rpg-program-signoff-syntax-compile/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    RPG Program Signoff (Syntax/Compile) – Tool Playbook
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/tools/rpg-testing-e2e/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    RPG Testing End-to-End – Tool Playbook
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/tools/sign-off-on-uat-stage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Sign Off on UAT (Stage) – Tool Playbook
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/tools/sign-off-user-stories-and-brd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Sign Off User Stories and BRD – Tool Walkthrough
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/tools/transfer-rpg-programs-to-power-10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Transfer RPG Programs to Power 10 – Tool Playbook
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    REST API ADR's
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            REST API ADR's
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../REST%20API%20ADR%27s/Reporting%20System%20Modernization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    App Reports Structure
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    RPG Legacy ADR's
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            RPG Legacy ADR's
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../RPG%20Legacy%20ADR%27s/RPG%20Development%20Standards/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    RPG Program and Database File Development Standards
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Security ADR's
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Security ADR's
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Security%20ADR%27s/Authorization%20Workflow%20/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Authorization Workflow 
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Testing ARD's
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            Testing ARD's
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Testing%20ARD%27s/UAT%20Process/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    User Acceptance Testing (UAT) Process
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-nodejs-framework-map" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Node.js Framework Map
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-ibm-i-connectivity-driver-layer" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. IBM i Connectivity &amp; Driver Layer
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. IBM i Connectivity &amp; Driver Layer">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagnosing-connection-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagnosing connection errors
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-sql-diagnostics-model-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. SQL Diagnostics &amp; Model Issues
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-bullbullmq-job-pipelines" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Bull/BullMQ Job Pipelines
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-spooled-file-output-queue-diagnostics" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Spooled File &amp; Output Queue Diagnostics
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Spooled File &amp; Output Queue Diagnostics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#debugging-spooloutput-queue-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      Debugging spool/output queue issues
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-end-to-end-checklist-for-node-rpg-ibm-i-bugs" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. End-to-End Checklist for Node ↔ RPG ↔ IBM i Bugs
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="debugging-node-rpg-ibm-i-integrations">Debugging Node ↔ RPG ↔ IBM i Integrations<a class="headerlink" href="#debugging-node-rpg-ibm-i-integrations" title="Permanent link">&para;</a></h1>
+<p>This guide documents the moving pieces in this repository and outlines how to diagnose failures anywhere along the NestJS → Bull/BullMQ queue → RPG programs → IBM i spooled output flow.</p>
+<h2 id="1-nodejs-framework-map">1. Node.js Framework Map<a class="headerlink" href="#1-nodejs-framework-map" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Concern</th>
+<th>Key Modules / Packages</th>
+<th>Debugging Tips</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>HTTP &amp; DI framework</strong></td>
+<td><code>AppModule</code> wires the NestJS modules for static file serving, config, caching, auth, account-payable flows, Bull, and the websocket gateway. 【F:src/app.module.ts†L1-L35】</td>
+<td>Run <code>npm run start:debug</code> to launch the Nest dev server with an inspector, then set breakpoints inside the relevant module providers.</td>
+</tr>
+<tr>
+<td><strong>HTTP platform</strong></td>
+<td>Nest boots on <code>@nestjs/platform-express</code>, and the app serves static assets via <code>@nestjs/serve-static</code>. Socket connections use <code>@nestjs/platform-socket.io</code>. All platform adapters are declared in <code>package.json</code>. 【F:package.json†L8-L78】</td>
+<td>If HTTP requests stall, confirm the correct platform adapter is installed (<code>node_modules/@nestjs/platform-express</code>) and that static roots resolve to real paths via <code>ServeStaticModule</code>.</td>
+</tr>
+<tr>
+<td><strong>Queues</strong></td>
+<td>Bull (<code>@nestjs/bull</code>, <code>bull</code>) handles classic queues; BullMQ (<code>bullmq</code>) is used for streaming uploads. Redis connection info lives in <code>src/shared/queue/bullmq-connection.ts</code>. 【F:package.json†L8-L78】【F:src/shared/queue/bullmq-connection.ts†L1-L4】</td>
+<td>Failed jobs show up in processor hooks such as <code>onFailed</code> inside each <code>@Processor</code> class. Attach a debugger to those hooks or query BullMQ using <code>bull-board</code>/<code>redis-cli</code> for stuck jobs.</td>
+</tr>
+<tr>
+<td><strong>ORM &amp; IBM driver</strong></td>
+<td>Sequelize (<code>sequelize</code>, <code>sequelize-typescript</code>) is paired with the DB2 for i dialect (<code>@sequelize/db2-ibmi</code>) and the native ODBC binding (<code>odbc</code>). 【F:package.json†L39-L78】</td>
+<td>Enable verbose SQL logging by running in non-prod (<code>NODE_ENV !== 'prod'</code>) and tailing the <code>Database</code> logger output from <code>customSequelizeLogger</code>.</td>
+</tr>
+<tr>
+<td><strong>Websocket fan-out</strong></td>
+<td>Websocket gateway/service broadcast upload summaries to browser clients. 【F:src/shared/websocket/websocket.service.ts†L1-L118】</td>
+<td>If browsers miss events, confirm the gateway is emitting (<code>emitEvent</code>, <code>emitToUser</code>) and that Redis pub/sub (if enabled) is reachable.</td>
+</tr>
+<tr>
+<td><strong>Observability</strong></td>
+<td><code>AppLogger</code> wraps Nest’s logger with timing helpers for slow operations. 【F:src/shared/logger/logger.service.ts†L1-L69】</td>
+<td>Call <code>logger.timing()</code>/<code>sharedTiming()</code> around long-running sections to surface delays in development logs.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="2-ibm-i-connectivity-driver-layer">2. IBM i Connectivity &amp; Driver Layer<a class="headerlink" href="#2-ibm-i-connectivity-driver-layer" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>Container prerequisites</strong> – The Dockerfile installs unixODBC + IBM i Access ODBC driver, copies <code>odbc.ini</code>, then builds the Nest app. Missing packages or an unreadable <code>odbc.ini</code> are the first things to check when DSN resolution fails. 【F:Dockerfile†L1-L49】</li>
+<li><strong>DSN / ODBC configuration</strong> – The project checks an <code>odbc.ini</code> file (copied into <code>/etc/odbc.ini</code>) that contains a baseline <code>AS400DB</code> definition, including the IBM i system IP, default package library, CCSID translation and tracing flags. 【F:src/shared/infrastructure/odbc/odbc.ini†L1-L27】</li>
+<li><strong>Runtime connection builder</strong> – <code>buildDsn()</code> in <code>connection.ts</code> composes the IBM i Access connection string from <code>DB_SYSTEM</code>, <code>DB_USERNAME</code>, <code>DB_PASSWORD</code>, and package overrides. Logging is enabled by default when <code>NODE_ENV !== 'prod'</code>. 【F:src/shared/infrastructure/connection.ts†L71-L134】</li>
+<li><strong>Pool and retry tuning</strong> – <code>connectAs400Db2IBMi()</code> configures Sequelize with explicit pool sizes, benchmark logging, and retry counts, then races authentication against a 15s timeout so hangs surface quickly. 【F:src/shared/infrastructure/connection.ts†L194-L233】</li>
+<li><strong>Dynamic library resolution</strong> – After connecting, the app always runs the <code>SETENVPRC</code> stored procedure via <code>DynamicLibraryManager</code>. It dynamically creates <code>QGPL</code> variables, calls the SP, trims outputs (data/work/sp libraries plus error message), updates process env vars, and drops the temp variables. Failures surface in the <code>DynamicLibraryManager</code> logger, and you can re-run the SP via <code>dynamicLibManager.setDynamicLibraries()</code> in a REPL. 【F:src/main/global-states/data/stored-procedure/dynamic-library-manager.ts†L1-L213】【F:src/shared/utils/db.utils.ts†L1-L79】</li>
+<li><strong>Library map per environment</strong> – <code>env-library-config.ts</code> keeps the default schema per environment. If SQL starts referencing the wrong library, confirm <code>NODE_ENV</code> and the derived <code>DB_*</code> env vars match what <code>DynamicLibraryManager.updateEnvironmentVariables()</code> prints. 【F:src/shared/config/env-library-config.ts†L4-L83】</li>
+</ol>
+<h3 id="diagnosing-connection-errors">Diagnosing connection errors<a class="headerlink" href="#diagnosing-connection-errors" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Checklist</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Database authentication timeout</code> or <code>Failed to connect to the database</code></td>
+<td>Ensure the Docker image picked up the IBM driver, verify <code>DB_SYSTEM/DB_USERNAME/DB_PASSWORD</code> in the running container, and re-run <code>connectAs400Db2IBMi()</code> to regenerate logs from <code>customSequelizeLogger</code>. 【F:src/shared/infrastructure/connection.ts†L194-L257】</td>
+</tr>
+<tr>
+<td><code>SETENVPRC stored procedure failed</code></td>
+<td>Query <code>QSYS2.SYSROUTINES</code> to confirm the SP exists (the helper already logs a warning/fallback). Check that the current user has authority to <code>CREATE VARIABLE</code> in QGPL because the manager drops/recreates them each call. 【F:src/main/global-states/data/stored-procedure/dynamic-library-manager.ts†L40-L123】</td>
+</tr>
+<tr>
+<td>Models missing tables/columns</td>
+<td><code>initializeModels()</code> enumerates every table that must be initialized after connection. If a model fails, it will throw before <code>isModelsInitialized</code> flips. Inspect the preceding log statements to see which initializer last ran. 【F:src/shared/infrastructure/connection.ts†L136-L191】</td>
+</tr>
+</tbody>
+</table>
+<h2 id="3-sql-diagnostics-model-issues">3. SQL Diagnostics &amp; Model Issues<a class="headerlink" href="#3-sql-diagnostics-model-issues" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>Custom SQL logging</strong> – With <code>NODE_ENV !== 'prod'</code>, <code>customSequelizeLogger</code> emits the full SQL statement and timing at <code>warn</code> level, making it easy to correlate with IBM job logs. 【F:src/shared/infrastructure/connection.ts†L117-L134】</li>
+<li><strong>Dynamic tables</strong> – Utility helpers in <code>db.utils.ts</code> build schema-qualified names, guard against duplicate registration, and drop temp variables. When diagnosing incorrect table names, inspect <code>buildTableName()</code>/<code>initializeModelWithSequelize()</code> to see how prefixes/suffixes are derived. 【F:src/shared/utils/db.utils.ts†L1-L79】</li>
+<li><strong>Library-specific failures</strong> – Compare the resolved schema from <code>getTableAndSchemaInfo()</code> / <code>getDynamicTableAndSchemaInfo()</code> with the job log library list to confirm you are hitting the intended environment libraries. 【F:src/shared/config/env-library-config.ts†L30-L83】</li>
+</ol>
+<h2 id="4-bullbullmq-job-pipelines">4. Bull/BullMQ Job Pipelines<a class="headerlink" href="#4-bullbullmq-job-pipelines" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Queue wiring</strong> – Each processor (Flexi uploads, SOGAS, Clear Checks, etc.) is decorated with <code>@Processor(QUEUE_NAMES.X)</code> and exposes <code>onActive</code>, <code>onCompleted</code>, and <code>onFailed</code> hooks that log the Bull job lifecycle. For example, <code>FlexiProcessor</code> logs every transition, binds user context, limits parallelism, and records batch summaries back into Redis. 【F:src/main/account-payable/application/voucher/shared-services/flexi.processor.ts†L1-L175】</li>
+<li><strong>Redis connection</strong> – <code>redis_connection</code> simply reads <code>REDIS_HOST</code>/<code>REDIS_PORT</code>. If every job immediately fails with <code>ECONNREFUSED</code>, inspect those env vars and confirm Redis is reachable. 【F:src/shared/queue/bullmq-connection.ts†L1-L4】</li>
+<li><strong>Websocket fan-out</strong> – Job processors push interim/final summaries through <code>WebsocketService</code>, which calculates per-status totals and emits user-scoped events (<code>emitUploadStatusToUser</code>). Missing UI updates usually mean the <code>UserContext</code> lacks initials or the gateway is not subscribed. 【F:src/shared/websocket/websocket.service.ts†L1-L118】</li>
+<li><strong>Debug strategy</strong> – Attach a debugger to the <code>handle()</code> method of the relevant processor, replay the job data (from Redis or API logs), and step through <code>validateHeader</code>, <code>saveVoucherData</code>, and the DB writes. Because the processors log invoice numbers, you can cross-reference IBM joblogs for the same invoice ID.</li>
+</ul>
+<h2 id="5-spooled-file-output-queue-diagnostics">5. Spooled File &amp; Output Queue Diagnostics<a class="headerlink" href="#5-spooled-file-output-queue-diagnostics" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>Metadata captured per report</strong> – The <code>SpooledMetaDataReportEntity</code> stores spool/PDF filenames, report type, job identifiers, output queue name/library, file path, creation timestamp, form type, and any RPG error string. This lets you correlate Node errors with IBM job output queue entries. 【F:src/main/account-payable/domain/entities/spooled-meta-data-report.entity.ts†L1-L17】</li>
+<li><strong>Schema mapping</strong> – <code>SpooledMetadataReportModelSchema</code> maps each property to its IBM i physical file column (<code>MEJOBNM</code>, <code>MEOQNM</code>, etc.). If fields are blank in the API, inspect this mapping to verify the RPG program actually populated the column. 【F:src/main/account-payable/data/schemas/schema.ts†L2296-L2339】</li>
+<li><strong>Default spool config</strong> – <code>spooledReportMetaData</code> defines default spool file name (<code>APREPORT</code>), job user (<code>QUSER</code>), and output queue/library (<code>DAMCOOUTQ</code> / <code>QUSRSYS</code>) used when generating files (e.g., ACH, IRS, 1099 reports). Override these values when testing non-production queues. 【F:src/shared/config/generate-report-config.ts†L57-L127】</li>
+<li><strong>Repository queries</strong> – <code>SpooledMetaDataReportsRepository</code> exposes <code>SpooledMetadataReports()</code> to paginate by <code>reportType</code>, wildcard filename, and date range; it also formats the timestamps/file paths for the UI. Use this repository to confirm whether the IBM job created entries and whether <code>reportsFormatter</code> built a valid download path. 【F:src/main/account-payable/data/repositories/spooled-meta-data-reports.repository.ts†L1-L107】【F:src/shared/formatters/dropdown.formatter.ts†L1-L66】</li>
+<li><strong>Job correlation fields</strong> – Because the schema persists <code>jobName</code>, <code>jobNumber</code>, <code>jobUser</code>, <code>jobSystemName</code>, and <code>error</code>, you can filter the metadata table (via SQL or the repository) for a specific failing IBM job, then jump directly to its output queue entry using the stored <code>outputQueueName</code>/<code>outputQueueLibrary</code>.</li>
+</ol>
+<h3 id="debugging-spooloutput-queue-issues">Debugging spool/output queue issues<a class="headerlink" href="#debugging-spooloutput-queue-issues" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Issue</th>
+<th>How to investigate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Report exists in RPG queue but not in API</td>
+<td>Query the <code>SpooledMetadataReport</code> table for the <code>reportType</code> and timestamp window using the repository’s <code>where</code> construction to ensure the filters align with how the UI queries. 【F:src/main/account-payable/data/repositories/spooled-meta-data-reports.repository.ts†L24-L94】</td>
+</tr>
+<tr>
+<td>PDF download 404s</td>
+<td><code>reportsFormatter</code> rewrites <code>filePath</code> using <code>buildFilePath(row.pdfFileName.trim())</code>. Verify the PDF actually exists beneath the static root configured in <code>ServeStaticModule</code> and that <code>filePath</code> aligns with the SMB/NFS mount. 【F:src/shared/formatters/dropdown.formatter.ts†L1-L66】【F:src/app.module.ts†L15-L35】</td>
+</tr>
+<tr>
+<td>Spool shows wrong queue/library</td>
+<td>Confirm the defaults from <code>spooledReportMetaData</code> were overridden (if needed) before calling <code>createReports()</code>. When debugging, log the payload passed to <code>SpooledMetaDataReportInterface.createReports()</code> so you can match the queue metadata with IBM <code>WRKSPLF</code> output. 【F:src/shared/config/generate-report-config.ts†L57-L127】【F:src/main/account-payable/data/repositories/spooled-meta-data-reports.repository.ts†L97-L107】</td>
+</tr>
+</tbody>
+</table>
+<h2 id="6-end-to-end-checklist-for-node-rpg-ibm-i-bugs">6. End-to-End Checklist for Node ↔ RPG ↔ IBM i Bugs<a class="headerlink" href="#6-end-to-end-checklist-for-node-rpg-ibm-i-bugs" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>API entry point</strong> – Confirm the relevant Nest controller/use case received the expected DTO (enable class-validator errors). Use the inspector or HTTP logs to ensure the request payload matches the RPG program’s expectations.</li>
+<li><strong>Queue ingestion</strong> – Make sure the job was enqueued in Bull/BullMQ (watch Redis). If it failed immediately, inspect the processor’s <code>onFailed()</code> logs for stack traces. 【F:src/main/account-payable/application/voucher/shared-services/flexi.processor.ts†L55-L111】</li>
+<li><strong>Sequelize transaction</strong> – Track SQL logs for the job window. If a query fails, <code>customSequelizeLogger</code> will show the statement right before the error; match it against IBM joblog statements. 【F:src/shared/infrastructure/connection.ts†L117-L134】</li>
+<li><strong>RPG program execution</strong> – Use the stored job metadata (<code>jobName</code>, <code>jobNumber</code>, etc.) from the spooled metadata entries to open the IBM joblog (<code>DSPJOBLOG</code>) and the output queue (<code>WRKOUTQ</code>). 【F:src/main/account-payable/domain/entities/spooled-meta-data-report.entity.ts†L1-L17】</li>
+<li><strong>Spooled output verification</strong> – Compare the expected spool file name / form type against <code>spooledReportMetaData</code> defaults or overrides for the use case you are testing. 【F:src/shared/config/generate-report-config.ts†L57-L127】</li>
+<li><strong>Front-end surface</strong> – Ensure the formatted report list returned by <code>reportsFormatter</code> uses the same timezone/format as the UI filters; mismatches can hide real reports even when IBM generated them. 【F:src/shared/formatters/dropdown.formatter.ts†L1-L66】</li>
+</ol>
+<p>Following these steps gives you observability from the Nest request layer, through the queue processors, into the IBM DB2/ODBC layer, all the way to the IBM output queue that hosts the RPG-generated spooled files. When you need a click-by-click workflow for VS Code, IBM Navigator, ACS, or Data Studio, open the <a href="debugging/workflows/README.md">debugging workflows</a> directory for ready-to-run checklists that build on this reference.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "content.tabs", "navigation.sections", "search.suggest", "search.highlight", "palette.toggle"], "search": "../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.56ea9cef.min.js"></script>
+      
+    
+  </body>
+</html>
