@@ -19,23 +19,32 @@ In some cases, you may need to access Docker container logs directly to troubles
 
 1. Logs are stored at:
 
+```
 /var/snap/docker/common/var-lib-docker/containers/<container-id>/<container-id>-json.log
+```
 
-This path should be the same across most Linux distributions using Docker installed via Snap, as all at ARG should be. Replace `<container-id>` with the actual ID of your container.
+This path should be the same across most Linux distributions using Docker installed via Snap, as should be the same for all ARG servers. Replace `<container-id>` with the actual ID of your container.
 
 2. How to find your container's log file
 
-Get container ID: 
+Get container ID:  
 
+```
 sudo docker ps
+```
 
-Navigate to its folder: 
+Navigate to its folder:  
 
+```
 cd /var/snap/docker/common/var-lib-docker/containers/<container-id>
+```
 
-View the log file: 
+View the log file:  
 
+```
 sudo tail -f *-json.log
+```
+
 
 
 ## Evidence Package
