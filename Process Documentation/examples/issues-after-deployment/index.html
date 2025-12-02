@@ -1412,6 +1412,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#viewing-docker-logs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Viewing Docker Logs
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#evidence-package" class="md-nav__link">
     <span class="md-ellipsis">
       Evidence Package
@@ -2312,6 +2321,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#viewing-docker-logs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Viewing Docker Logs
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#evidence-package" class="md-nav__link">
     <span class="md-ellipsis">
       Evidence Package
@@ -2350,11 +2368,27 @@
 <ol>
 <li><strong>Acknowledge alert.</strong> Update ticket or respond to user, include RPG Team.</li>
 <li><strong>Gather data.</strong> Pull logs from <code>docs/DEBUGGING.md</code> instructions (Winston correlation IDs) and run <code>DSPJOBLOG</code> for any related IBM batch jobs.</li>
-<li><strong>Reproduce safely.</strong> Hit endpoint in Stage / reproduce, with the same payload to see if the issue repeats; capture the API response and DB queries.</li>
+<li><strong>Reproduce safely.</strong> Hit endpoint in Stage / reproduce, with the same payload to see if the issue repeats; capture the API response and DB queries. Using the Stage or sandbox environment avoids impacting production while debugging. Also, use F12 tools to capture and view errors, or network requests if applicable. </li>
 <li><strong>Identify root cause.</strong> Compare the failing code to the previous commit; e.g., missing column mapping referencing <code>X</code> table.</li>
 <li><strong>Issue fix.</strong> Create a hotfix branch, patch the repository, run <code>yarn test</code> and targeted RPG tests if required, then deploy via emergency pipeline.</li>
 <li><strong>Close incident.</strong> Document the timeline, attach logs, note the production verification steps, and file follow-up actions (e.g., add regression test).</li>
 </ol>
+<h2 id="viewing-docker-logs">Viewing Docker Logs<a class="headerlink" href="#viewing-docker-logs" title="Permanent link">&para;</a></h2>
+<p>In some cases, you may need to access Docker container logs directly to troubleshoot issues. The backend, frontend, and other services run inside Docker containers, and all use the default Docker logging driver, which stores logs in JSON format on the host machine.</p>
+<ol>
+<li>Logs are stored at:</li>
+</ol>
+<p>/var/snap/docker/common/var-lib-docker/containers/<container-id>/<container-id>-json.log</p>
+<p>This path should be the same across most Linux distributions using Docker installed via Snap, as all at ARG should be. Replace <code>&lt;container-id&gt;</code> with the actual ID of your container.</p>
+<ol>
+<li>How to find your container's log file</li>
+</ol>
+<p>Get container ID: </p>
+<p>sudo docker ps</p>
+<p>Navigate to its folder: </p>
+<p>cd /var/snap/docker/common/var-lib-docker/containers/<container-id></p>
+<p>View the log file: </p>
+<p>sudo tail -f *-json.log</p>
 <h2 id="evidence-package">Evidence Package<a class="headerlink" href="#evidence-package" title="Permanent link">&para;</a></h2>
 <ul>
 <li>Incident log with timestamps/actions.</li>
