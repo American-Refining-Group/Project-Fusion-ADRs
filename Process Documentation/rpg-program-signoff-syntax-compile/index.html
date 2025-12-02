@@ -2347,7 +2347,7 @@
 </ul>
 <h2 id="steps">Steps<a class="headerlink" href="#steps" title="Permanent link">&para;</a></h2>
 <ol>
-<li><strong>Verify environment setup.</strong> Run <code>SETENVPRC</code> or the equivalent CL to confirm the program sees the correct data, work, and stored procedure libraries. Record the output values.</li>
+<li><strong>Verify environment setup.</strong> Run <code>GSSETENV</code> or the equivalent CL to confirm the program sees the correct data, work, and stored procedure libraries. Record the output values.</li>
 <li><strong>Compile with tracing enabled.</strong> Execute the provided CRTBNDRPG/CRTRPGMOD commands. Capture the compile listing and highlight any warnings that still need signoff.</li>
 <li><strong>Check error messaging.</strong> Ensure the program writes failures to <code>errmsg_out</code> or another agreed data structure so Node logs surface compile/runtime errors.</li>
 <li><strong>Validate external dependencies.</strong> Confirm all called procedures, service programs, and files exist in the target libraries. Update the checklist if stubs or mocks were used.</li>

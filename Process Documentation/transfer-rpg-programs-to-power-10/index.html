@@ -2347,7 +2347,7 @@
 </ul>
 <h2 id="steps">Steps<a class="headerlink" href="#steps" title="Permanent link">&para;</a></h2>
 <ol>
-<li><strong>Inventory current libraries.</strong> Run <code>SETENVPRC</code> (or review <code>DynamicLibraryManager</code> output) in the source environment and record the data, work, and stored procedure libraries for each program.</li>
+<li><strong>Inventory current libraries.</strong> Run <code>GSSETENV</code> (or review <code>DynamicLibraryManager</code> output) in the source environment and record the data, work, and stored procedure libraries for each program.</li>
 <li><strong>Validate target libraries.</strong> Compare the recorded list with the Power 10 libraries. Document any renames so Node configs (<code>DB_DATA_LIB_*</code>, etc.) can be updated.</li>
 <li><strong>Migrate source members.</strong> Copy the source (SAVLIB/RSTLIB, RCLSTG) and verify member counts and timestamps after transfer.</li>
 <li><strong>Recompile on Power 10.</strong> Execute the compile scripts in the new environment. Capture listings and confirm there are no hardware-specific warnings.</li>
