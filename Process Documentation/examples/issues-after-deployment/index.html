@@ -2378,7 +2378,7 @@
 <ol>
 <li>Logs are stored at:</li>
 </ol>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>/var/snap/docker/common/var-lib-docker/containers/&lt;container-id&gt;/&lt;container-id&gt;-json.log
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>/var/snap/docker/common/var-lib-docker/containers/`&lt;container-id&gt;`/`&lt;container-id&gt;`-json.log
 </code></pre></div></td></tr></table></div>
 <p>This path should be the same across most Linux distributions using Docker installed via Snap, as should be the same for all ARG servers. Replace <code>&lt;container-id&gt;</code> with the actual ID of your container.</p>
 <ol>
@@ -2388,7 +2388,7 @@
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>sudo docker ps
 </code></pre></div></td></tr></table></div>
 <p>Navigate to its folder:  </p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>cd /var/snap/docker/common/var-lib-docker/containers/&lt;container-id&gt;
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>cd /var/snap/docker/common/var-lib-docker/containers/`&lt;container-id&gt;`
 </code></pre></div></td></tr></table></div>
 <p>View the log file:  </p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>sudo tail -f *-json.log
