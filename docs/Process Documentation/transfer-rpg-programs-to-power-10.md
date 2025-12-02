@@ -8,7 +8,7 @@ Use this checklist when moving RPG assets to new Power 10 hardware.
 - Coordinate downtime or promotion windows with operations.
 
 ## Steps
-1. **Inventory current libraries.** Run `SETENVPRC` (or review `DynamicLibraryManager` output) in the source environment and record the data, work, and stored procedure libraries for each program.
+1. **Inventory current libraries.** Run `GSSETENV` (or review `DynamicLibraryManager` output) in the source environment and record the data, work, and stored procedure libraries for each program.
 2. **Validate target libraries.** Compare the recorded list with the Power 10 libraries. Document any renames so Node configs (`DB_DATA_LIB_*`, etc.) can be updated.
 3. **Migrate source members.** Copy the source (SAVLIB/RSTLIB, RCLSTG) and verify member counts and timestamps after transfer.
 4. **Recompile on Power 10.** Execute the compile scripts in the new environment. Capture listings and confirm there are no hardware-specific warnings.
