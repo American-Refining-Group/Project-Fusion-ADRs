@@ -2348,7 +2348,7 @@
 <h2 id="steps">Steps<a class="headerlink" href="#steps" title="Permanent link">&para;</a></h2>
 <ol>
 <li><strong>Validate inputs/outputs.</strong> Confirm the RPG program reads and writes every field required by the entity (job name, queue, report type, etc.). Note any missing assignments.</li>
-<li><strong>Check library bindings.</strong> Ensure the program references the libraries resolved by <code>DynamicLibraryManager</code> or <code>GSSETENV</code>. If a different library is required, document the override and reason.</li>
+<li><strong>Check library bindings.</strong> Ensure the program references the libraries resolved by <code>GSSETENV</code>. If a different library is required, document the override and reason.</li>
 <li><strong>Review error handling.</strong> Confirm the program returns clear status codes or messages via <code>errmsg_out</code> so Node logs show meaningful failures.</li>
 <li><strong>Inspect queue/report usage.</strong> Compare the output queue names and report defaults with <code>generate-report-config.ts</code>. Flag discrepancies so downstream processes keep working.</li>
 <li><strong>Examine performance/locking.</strong> Look for unnecessary exclusive locks, missing commitment control, or loops that could cause long-running jobs.</li>
