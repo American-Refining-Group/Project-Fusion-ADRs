@@ -12,28 +12,28 @@
         <meta name="author" content="American Refining Group">
       
       
-        <link rel="canonical" href="https://github.com/Debugging%20Documentation/errors/db2-connection-failures/">
+        <link rel="canonical" href="https://github.com/AS400%20ORM%20Connection/">
       
       
-        <link rel="prev" href="../504-gateway-timeouts/">
+        <link rel="prev" href="..">
       
       
-        <link rel="next" href="../../workflows/">
+        <link rel="next" href="../Playwright%20Testing/">
       
       
-      <link rel="icon" href="../../../assets/images/favicon.png">
+      <link rel="icon" href="../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.15">
     
     
       
-        <title>DB2 Connection Failures (SQLSTATE 08001/08004) – Diagnostic Playbook - ARG ERP Architechtual Decison Records</title>
+        <title>AS400 ORM Connection - ARG ERP Architechtual Decison Records</title>
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.342714a4.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.342714a4.min.css">
       
         
-        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -52,7 +52,7 @@
       
     
     
-    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -75,11 +75,6 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
-        
-        <a href="#db2-connection-failures-sqlstate-0800108004-diagnostic-playbook" class="md-skip">
-          Skip to content
-        </a>
-      
     </div>
     <div data-md-component="announce">
       
@@ -92,7 +87,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../../.." title="ARG ERP Architechtual Decison Records" class="md-header__button md-logo" aria-label="ARG ERP Architechtual Decison Records" data-md-component="logo">
+    <a href=".." title="ARG ERP Architechtual Decison Records" class="md-header__button md-logo" aria-label="ARG ERP Architechtual Decison Records" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -112,7 +107,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              DB2 Connection Failures (SQLSTATE 08001/08004) – Diagnostic Playbook
+              AS400 ORM Connection
             
           </span>
         </div>
@@ -204,7 +199,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../.." title="ARG ERP Architechtual Decison Records" class="md-nav__button md-logo" aria-label="ARG ERP Architechtual Decison Records" data-md-component="logo">
+    <a href=".." title="ARG ERP Architechtual Decison Records" class="md-nav__button md-logo" aria-label="ARG ERP Architechtual Decison Records" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -234,7 +229,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../.." class="md-nav__link">
+      <a href=".." class="md-nav__link">
         
   
   
@@ -253,10 +248,17 @@
       
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../../AS400%20ORM%20Connection/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -267,6 +269,7 @@
   
 
       </a>
+      
     </li>
   
 
@@ -278,7 +281,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../Playwright%20Testing/" class="md-nav__link">
+      <a href="../Playwright%20Testing/" class="md-nav__link">
         
   
   
@@ -297,8 +300,6 @@
       
   
   
-    
-  
   
   
     
@@ -311,11 +312,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
         
           
           <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
@@ -331,7 +332,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             Debugging Documentation
@@ -345,7 +346,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../DEBUGGING/" class="md-nav__link">
+      <a href="../Debugging%20Documentation/DEBUGGING/" class="md-nav__link">
         
   
   
@@ -365,8 +366,6 @@
                 
   
   
-    
-  
   
   
     
@@ -376,11 +375,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" >
         
           
           <label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
@@ -396,7 +395,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_4_2">
             <span class="md-nav__icon md-icon"></span>
             Errors
@@ -410,7 +409,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../" class="md-nav__link">
+      <a href="../Debugging%20Documentation/errors/" class="md-nav__link">
         
   
   
@@ -433,7 +432,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../500-internal-server-errors/" class="md-nav__link">
+      <a href="../Debugging%20Documentation/errors/500-internal-server-errors/" class="md-nav__link">
         
   
   
@@ -456,7 +455,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../502-bad-gateway/" class="md-nav__link">
+      <a href="../Debugging%20Documentation/errors/502-bad-gateway/" class="md-nav__link">
         
   
   
@@ -479,7 +478,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../503-service-unavailable/" class="md-nav__link">
+      <a href="../Debugging%20Documentation/errors/503-service-unavailable/" class="md-nav__link">
         
   
   
@@ -502,7 +501,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../504-gateway-timeouts/" class="md-nav__link">
+      <a href="../Debugging%20Documentation/errors/504-gateway-timeouts/" class="md-nav__link">
         
   
   
@@ -522,32 +521,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    DB2 Connection Failures (SQLSTATE 08001/08004) – Diagnostic Playbook
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../Debugging%20Documentation/errors/db2-connection-failures/" class="md-nav__link">
         
   
   
@@ -558,80 +535,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#1-confirm-the-symptom" class="md-nav__link">
-    <span class="md-ellipsis">
-      1. Confirm the Symptom
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#2-containment" class="md-nav__link">
-    <span class="md-ellipsis">
-      2. Containment
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#3-ibm-i-diagnostics" class="md-nav__link">
-    <span class="md-ellipsis">
-      3. IBM i Diagnostics
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#4-application-diagnostics" class="md-nav__link">
-    <span class="md-ellipsis">
-      4. Application Diagnostics
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#5-resolution-paths" class="md-nav__link">
-    <span class="md-ellipsis">
-      5. Resolution Paths
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#6-evidence-checklist" class="md-nav__link">
-    <span class="md-ellipsis">
-      6. Evidence Checklist
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -692,7 +595,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../workflows/" class="md-nav__link">
+      <a href="../Debugging%20Documentation/workflows/" class="md-nav__link">
         
   
   
@@ -715,7 +618,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../workflows/ibmi-tooling/" class="md-nav__link">
+      <a href="../Debugging%20Documentation/workflows/ibmi-tooling/" class="md-nav__link">
         
   
   
@@ -738,7 +641,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../workflows/rapid-triage/" class="md-nav__link">
+      <a href="../Debugging%20Documentation/workflows/rapid-triage/" class="md-nav__link">
         
   
   
@@ -761,7 +664,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../workflows/vscode-debugging/" class="md-nav__link">
+      <a href="../Debugging%20Documentation/workflows/vscode-debugging/" class="md-nav__link">
         
   
   
@@ -842,7 +745,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../Front%20End%20ADR%27s/Client%20Side%20Grid%20Handling/" class="md-nav__link">
+      <a href="../Front%20End%20ADR%27s/Client%20Side%20Grid%20Handling/" class="md-nav__link">
         
   
   
@@ -865,7 +768,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../Front%20End%20ADR%27s/File%20Upload%20Workflow/" class="md-nav__link">
+      <a href="../Front%20End%20ADR%27s/File%20Upload%20Workflow/" class="md-nav__link">
         
   
   
@@ -888,7 +791,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../Front%20End%20ADR%27s/LRO%20Long%20Running%20Operations/" class="md-nav__link">
+      <a href="../Front%20End%20ADR%27s/LRO%20Long%20Running%20Operations/" class="md-nav__link">
         
   
   
@@ -911,7 +814,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../Front%20End%20ADR%27s/Uproccesed%20Records%20Response/" class="md-nav__link">
+      <a href="../Front%20End%20ADR%27s/Uproccesed%20Records%20Response/" class="md-nav__link">
         
   
   
@@ -984,7 +887,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../Process%20Documentation/" class="md-nav__link">
+      <a href="../Process%20Documentation/" class="md-nav__link">
         
   
   
@@ -1007,7 +910,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../Process%20Documentation/approve-qa-test-cases-from-acceptance-criteria/" class="md-nav__link">
+      <a href="../Process%20Documentation/approve-qa-test-cases-from-acceptance-criteria/" class="md-nav__link">
         
   
   
@@ -1030,7 +933,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../Process%20Documentation/code-review-nodejs/" class="md-nav__link">
+      <a href="../Process%20Documentation/code-review-nodejs/" class="md-nav__link">
         
   
   
@@ -1053,7 +956,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../Process%20Documentation/code-review-rpg/" class="md-nav__link">
+      <a href="../Process%20Documentation/code-review-rpg/" class="md-nav__link">
         
   
   
@@ -1076,7 +979,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../Process%20Documentation/feature-change-requests/" class="md-nav__link">
+      <a href="../Process%20Documentation/feature-change-requests/" class="md-nav__link">
         
   
   
@@ -1099,7 +1002,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../Process%20Documentation/integrations-with-external-apps/" class="md-nav__link">
+      <a href="../Process%20Documentation/integrations-with-external-apps/" class="md-nav__link">
         
   
   
@@ -1122,7 +1025,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../Process%20Documentation/issues-after-deployment/" class="md-nav__link">
+      <a href="../Process%20Documentation/issues-after-deployment/" class="md-nav__link">
         
   
   
@@ -1145,7 +1048,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../Process%20Documentation/legacy-table-to-api-resource-mapping/" class="md-nav__link">
+      <a href="../Process%20Documentation/legacy-table-to-api-resource-mapping/" class="md-nav__link">
         
   
   
@@ -1168,7 +1071,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../Process%20Documentation/own-go-live-tasks/" class="md-nav__link">
+      <a href="../Process%20Documentation/own-go-live-tasks/" class="md-nav__link">
         
   
   
@@ -1191,7 +1094,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../Process%20Documentation/rpg-program-signoff-syntax-compile/" class="md-nav__link">
+      <a href="../Process%20Documentation/rpg-program-signoff-syntax-compile/" class="md-nav__link">
         
   
   
@@ -1214,7 +1117,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../Process%20Documentation/rpg-testing-e2e/" class="md-nav__link">
+      <a href="../Process%20Documentation/rpg-testing-e2e/" class="md-nav__link">
         
   
   
@@ -1237,7 +1140,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../Process%20Documentation/sign-off-on-uat-stage/" class="md-nav__link">
+      <a href="../Process%20Documentation/sign-off-on-uat-stage/" class="md-nav__link">
         
   
   
@@ -1260,7 +1163,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../Process%20Documentation/sign-off-user-stories-and-brd/" class="md-nav__link">
+      <a href="../Process%20Documentation/sign-off-user-stories-and-brd/" class="md-nav__link">
         
   
   
@@ -1283,7 +1186,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../Process%20Documentation/transfer-rpg-programs-to-power-10/" class="md-nav__link">
+      <a href="../Process%20Documentation/transfer-rpg-programs-to-power-10/" class="md-nav__link">
         
   
   
@@ -1346,7 +1249,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../Process%20Documentation/examples/" class="md-nav__link">
+      <a href="../Process%20Documentation/examples/" class="md-nav__link">
         
   
   
@@ -1369,7 +1272,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../Process%20Documentation/examples/approve-qa-test-cases-from-acceptance-criteria/" class="md-nav__link">
+      <a href="../Process%20Documentation/examples/approve-qa-test-cases-from-acceptance-criteria/" class="md-nav__link">
         
   
   
@@ -1392,7 +1295,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../Process%20Documentation/examples/code-review-nodejs/" class="md-nav__link">
+      <a href="../Process%20Documentation/examples/code-review-nodejs/" class="md-nav__link">
         
   
   
@@ -1415,7 +1318,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../Process%20Documentation/examples/code-review-rpg/" class="md-nav__link">
+      <a href="../Process%20Documentation/examples/code-review-rpg/" class="md-nav__link">
         
   
   
@@ -1438,7 +1341,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../Process%20Documentation/examples/feature-change-requests/" class="md-nav__link">
+      <a href="../Process%20Documentation/examples/feature-change-requests/" class="md-nav__link">
         
   
   
@@ -1461,7 +1364,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../Process%20Documentation/examples/integrations-with-external-apps/" class="md-nav__link">
+      <a href="../Process%20Documentation/examples/integrations-with-external-apps/" class="md-nav__link">
         
   
   
@@ -1484,7 +1387,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../Process%20Documentation/examples/issues-after-deployment/" class="md-nav__link">
+      <a href="../Process%20Documentation/examples/issues-after-deployment/" class="md-nav__link">
         
   
   
@@ -1507,7 +1410,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../Process%20Documentation/examples/legacy-table-to-api-resource-mapping/" class="md-nav__link">
+      <a href="../Process%20Documentation/examples/legacy-table-to-api-resource-mapping/" class="md-nav__link">
         
   
   
@@ -1530,7 +1433,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../Process%20Documentation/examples/own-go-live-tasks/" class="md-nav__link">
+      <a href="../Process%20Documentation/examples/own-go-live-tasks/" class="md-nav__link">
         
   
   
@@ -1553,7 +1456,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../Process%20Documentation/examples/rpg-program-signoff-syntax-compile/" class="md-nav__link">
+      <a href="../Process%20Documentation/examples/rpg-program-signoff-syntax-compile/" class="md-nav__link">
         
   
   
@@ -1576,7 +1479,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../Process%20Documentation/examples/rpg-testing-e2e/" class="md-nav__link">
+      <a href="../Process%20Documentation/examples/rpg-testing-e2e/" class="md-nav__link">
         
   
   
@@ -1599,7 +1502,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../Process%20Documentation/examples/sign-off-on-uat-stage/" class="md-nav__link">
+      <a href="../Process%20Documentation/examples/sign-off-on-uat-stage/" class="md-nav__link">
         
   
   
@@ -1622,7 +1525,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../Process%20Documentation/examples/sign-off-user-stories-and-brd/" class="md-nav__link">
+      <a href="../Process%20Documentation/examples/sign-off-user-stories-and-brd/" class="md-nav__link">
         
   
   
@@ -1645,7 +1548,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../Process%20Documentation/examples/transfer-rpg-programs-to-power-10/" class="md-nav__link">
+      <a href="../Process%20Documentation/examples/transfer-rpg-programs-to-power-10/" class="md-nav__link">
         
   
   
@@ -1716,7 +1619,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../Process%20Documentation/tools/" class="md-nav__link">
+      <a href="../Process%20Documentation/tools/" class="md-nav__link">
         
   
   
@@ -1739,7 +1642,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../Process%20Documentation/tools/approve-qa-test-cases-from-acceptance-criteria/" class="md-nav__link">
+      <a href="../Process%20Documentation/tools/approve-qa-test-cases-from-acceptance-criteria/" class="md-nav__link">
         
   
   
@@ -1762,7 +1665,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../Process%20Documentation/tools/code-review-nodejs/" class="md-nav__link">
+      <a href="../Process%20Documentation/tools/code-review-nodejs/" class="md-nav__link">
         
   
   
@@ -1785,7 +1688,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../Process%20Documentation/tools/code-review-rpg/" class="md-nav__link">
+      <a href="../Process%20Documentation/tools/code-review-rpg/" class="md-nav__link">
         
   
   
@@ -1808,7 +1711,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../Process%20Documentation/tools/feature-change-requests/" class="md-nav__link">
+      <a href="../Process%20Documentation/tools/feature-change-requests/" class="md-nav__link">
         
   
   
@@ -1831,7 +1734,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../Process%20Documentation/tools/integrations-with-external-apps/" class="md-nav__link">
+      <a href="../Process%20Documentation/tools/integrations-with-external-apps/" class="md-nav__link">
         
   
   
@@ -1854,7 +1757,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../Process%20Documentation/tools/issues-after-deployment/" class="md-nav__link">
+      <a href="../Process%20Documentation/tools/issues-after-deployment/" class="md-nav__link">
         
   
   
@@ -1877,7 +1780,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../Process%20Documentation/tools/legacy-table-to-api-resource-mapping/" class="md-nav__link">
+      <a href="../Process%20Documentation/tools/legacy-table-to-api-resource-mapping/" class="md-nav__link">
         
   
   
@@ -1900,7 +1803,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../Process%20Documentation/tools/own-go-live-tasks/" class="md-nav__link">
+      <a href="../Process%20Documentation/tools/own-go-live-tasks/" class="md-nav__link">
         
   
   
@@ -1923,7 +1826,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../Process%20Documentation/tools/rpg-program-signoff-syntax-compile/" class="md-nav__link">
+      <a href="../Process%20Documentation/tools/rpg-program-signoff-syntax-compile/" class="md-nav__link">
         
   
   
@@ -1946,7 +1849,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../Process%20Documentation/tools/rpg-testing-e2e/" class="md-nav__link">
+      <a href="../Process%20Documentation/tools/rpg-testing-e2e/" class="md-nav__link">
         
   
   
@@ -1969,7 +1872,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../Process%20Documentation/tools/sign-off-on-uat-stage/" class="md-nav__link">
+      <a href="../Process%20Documentation/tools/sign-off-on-uat-stage/" class="md-nav__link">
         
   
   
@@ -1992,7 +1895,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../Process%20Documentation/tools/sign-off-user-stories-and-brd/" class="md-nav__link">
+      <a href="../Process%20Documentation/tools/sign-off-user-stories-and-brd/" class="md-nav__link">
         
   
   
@@ -2015,7 +1918,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../Process%20Documentation/tools/transfer-rpg-programs-to-power-10/" class="md-nav__link">
+      <a href="../Process%20Documentation/tools/transfer-rpg-programs-to-power-10/" class="md-nav__link">
         
   
   
@@ -2096,7 +1999,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../REST%20API%20ADR%27s/Reporting%20System%20Modernization/" class="md-nav__link">
+      <a href="../REST%20API%20ADR%27s/Reporting%20System%20Modernization/" class="md-nav__link">
         
   
   
@@ -2169,7 +2072,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../RPG%20Legacy%20ADR%27s/RPG%20Development%20Standards/" class="md-nav__link">
+      <a href="../RPG%20Legacy%20ADR%27s/RPG%20Development%20Standards/" class="md-nav__link">
         
   
   
@@ -2242,7 +2145,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../Security%20ADR%27s/Authorization%20Workflow/" class="md-nav__link">
+      <a href="../Security%20ADR%27s/Authorization%20Workflow/" class="md-nav__link">
         
   
   
@@ -2315,7 +2218,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../Testing%20ARD%27s/UAT%20Process/" class="md-nav__link">
+      <a href="../Testing%20ARD%27s/UAT%20Process/" class="md-nav__link">
         
   
   
@@ -2355,70 +2258,6 @@
   
   
   
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#1-confirm-the-symptom" class="md-nav__link">
-    <span class="md-ellipsis">
-      1. Confirm the Symptom
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#2-containment" class="md-nav__link">
-    <span class="md-ellipsis">
-      2. Containment
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#3-ibm-i-diagnostics" class="md-nav__link">
-    <span class="md-ellipsis">
-      3. IBM i Diagnostics
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#4-application-diagnostics" class="md-nav__link">
-    <span class="md-ellipsis">
-      4. Application Diagnostics
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#5-resolution-paths" class="md-nav__link">
-    <span class="md-ellipsis">
-      5. Resolution Paths
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#6-evidence-checklist" class="md-nav__link">
-    <span class="md-ellipsis">
-      6. Evidence Checklist
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
   
 </nav>
                   </div>
@@ -2437,45 +2276,9 @@
   
 
 
-<h1 id="db2-connection-failures-sqlstate-0800108004-diagnostic-playbook">DB2 Connection Failures (SQLSTATE 08001/08004) – Diagnostic Playbook<a class="headerlink" href="#db2-connection-failures-sqlstate-0800108004-diagnostic-playbook" title="Permanent link">&para;</a></h1>
-<p>Follow this guide when the API logs show <code>SequelizeConnectionError</code>, <code>SQL0901</code>, <code>SQL30081N</code>, or SQLSTATE 08001/08004 errors indicating the Node process cannot open or retain DB2 connections on IBM i. These issues often manifest as HTTP 500/503 responses upstream, so documenting them separately keeps DB/ODBC actions clear.</p>
-<h2 id="1-confirm-the-symptom">1. Confirm the Symptom<a class="headerlink" href="#1-confirm-the-symptom" title="Permanent link">&para;</a></h2>
-<ul>
-<li><strong>Collect application logs.</strong> Use <code>docker logs arg-backend-dev | rg -n "SequelizeConnection" -C3</code> to capture the first error plus retry attempts.</li>
-<li><strong>Check DB2 availability.</strong> From IBM Data Studio or ACS, run a simple query (<code>SELECT CURRENT_DATE FROM SYSIBM.SYSDUMMY1</code>) to confirm the LPAR accepts connections.</li>
-<li><strong>Identify affected pools.</strong> Note which Sequelize configuration (primary vs reporting) failed by checking <code>src/shared/infrastructure/connection.ts</code> or module-specific datasource files.</li>
-</ul>
-<h2 id="2-containment">2. Containment<a class="headerlink" href="#2-containment" title="Permanent link">&para;</a></h2>
-<ol>
-<li><strong>Recycle idle handles.</strong> Restart only the NestJS API container (<code>docker compose restart api</code>) so Redis/jobs remain intact while new DB2 sessions are negotiated.</li>
-<li><strong>Throttle traffic.</strong> Temporarily reduce concurrency (HPA min replicas, worker count) so DB2 is not flooded with retries that prolong the outage.</li>
-<li><strong>Escalate to IBM i ops.</strong> If the error references CPF/SQL messages (e.g., CPF9898), alert the IBM operator to inspect <code>QSYSOPR</code> for system-wide issues.</li>
-</ol>
-<h2 id="3-ibm-i-diagnostics">3. IBM i Diagnostics<a class="headerlink" href="#3-ibm-i-diagnostics" title="Permanent link">&para;</a></h2>
-<ul>
-<li><strong>Active job review.</strong> Run <code>WRKACTJOB SBS(QUSRWRK)</code> and filter for <code>QZDASOINIT</code> to ensure jobs are not stuck in <code>MSGW</code>. Responding to the message often frees the port.</li>
-<li><strong>Connection limits.</strong> Execute <code>SELECT * FROM QSYS2.NETSTAT_JOB_INFO</code> to see socket states; if the host reached its limit, you may need to end stale jobs with <code>ENDPJ</code> or <code>ENDJOB</code>.</li>
-<li><strong>Authority changes.</strong> SQL08004 commonly signals revoked credentials. Verify the service profile still has the correct library list and authorities.</li>
-</ul>
-<h2 id="4-application-diagnostics">4. Application Diagnostics<a class="headerlink" href="#4-application-diagnostics" title="Permanent link">&para;</a></h2>
-<ul>
-<li><strong>Pool exhaustion.</strong> Confirm <code>max</code>/<code>acquire</code> timeout settings in the Sequelize config are balanced with IBM i capacity (default <code>pool.max=5</code>). Increase only when IBM i operators approve additional jobs.</li>
-<li><strong>TLS/driver drift.</strong> Check <code>odbc.ini</code> and the IBM i Access ODBC driver version used in the container. Recent OS/PTF updates may require a new driver level.</li>
-<li><strong>Long-running transactions.</strong> Use <code>QSYS2.ACTIVE_JOB_INFO</code> to find transactions holding locks for &gt;30s; they prevent new sessions from starting until commit/rollback.</li>
-</ul>
-<h2 id="5-resolution-paths">5. Resolution Paths<a class="headerlink" href="#5-resolution-paths" title="Permanent link">&para;</a></h2>
-<ul>
-<li><strong>Restart the host listener.</strong> IBM ops can recycle <code>QUSRWRK</code> or DB2 TCP/IP servers if sockets are wedged.</li>
-<li><strong>Adjust pool/backoff.</strong> Implement exponential backoff in <code>src/shared/infrastructure/connection.ts</code> and expose metrics so chronic spikes trigger alerts before saturation.</li>
-<li><strong>Coordinate credential updates.</strong> When passwords/SSL certificates rotate, update Kubernetes secrets or <code>.env</code> simultaneously to avoid rejected logins.</li>
-</ul>
-<h2 id="6-evidence-checklist">6. Evidence Checklist<a class="headerlink" href="#6-evidence-checklist" title="Permanent link">&para;</a></h2>
-<ul>
-<li>Exact log excerpts with SQLSTATE/SQLCODE.</li>
-<li>isql or Data Studio screenshots proving success/failure after fixes.</li>
-<li>IBM i job/subsystem status before and after remediation.</li>
-<li>Link to configuration changes (Sequelize pool, secrets, driver updates) deployed to resolve the incident.</li>
-</ul>
+  <h1>AS400 ORM Connection</h1>
+
+<p><img alt="Diagram" src="../images/ORM-AS400%20Connection%20Flow.png" /></p>
 
 
 
@@ -2524,10 +2327,10 @@
     
     
       
-      <script id="__config" type="application/json">{"base": "../../..", "features": ["content.code.copy", "content.tabs", "navigation.sections", "search.suggest", "search.highlight", "palette.toggle"], "search": "../../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"base": "..", "features": ["content.code.copy", "content.tabs", "navigation.sections", "search.suggest", "search.highlight", "palette.toggle"], "search": "../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.56ea9cef.min.js"></script>
+      <script src="../assets/javascripts/bundle.56ea9cef.min.js"></script>
       
     
   </body>
