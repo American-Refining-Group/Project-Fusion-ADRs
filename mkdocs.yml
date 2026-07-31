@@ -33,7 +33,11 @@ plugins:
 markdown_extensions:
   - admonition          # Support for callouts (notes, warnings, etc.)
   - pymdownx.details    # Collapsible sections
-  - pymdownx.superfences  # Advanced code block formatting
+  - pymdownx.superfences: # Advanced code block formatting
+      custom_fences:      # Render ```mermaid blocks as diagrams, not code
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
   - pymdownx.highlight: # Syntax highlighting for code
       linenums: true    # Add line numbers to code blocks
   - toc:                # In-page table of contents
