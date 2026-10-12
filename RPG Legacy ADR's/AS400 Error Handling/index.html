@@ -1,0 +1,2806 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Documentation of process and architecture">
+      
+      
+        <meta name="author" content="American Refining Group">
+      
+      
+        <link rel="canonical" href="https://github.com/RPG%20Legacy%20ADR%27s/AS400%20Error%20Handling/">
+      
+      
+        <link rel="prev" href="../../REST%20API%20ADR%27s/Reporting%20System%20Modernization/">
+      
+      
+        <link rel="next" href="../AS400%20Stored%20Procedure%20Calls/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.15">
+    
+    
+      
+        <title>ADR: Layered Error Handling for AS/400 RPGLE/CLLE Applications - ARG ERP Architechtual Decison Records</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.342714a4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#adr-layered-error-handling-for-as400-rpgleclle-applications" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="ARG ERP Architechtual Decison Records" class="md-header__button md-logo" aria-label="ARG ERP Architechtual Decison Records" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ARG ERP Architechtual Decison Records
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              ADR: Layered Error Handling for AS/400 RPGLE/CLLE Applications
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/American-Refining-Group/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    American-Refining-Group/
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="ARG ERP Architechtual Decison Records" class="md-nav__button md-logo" aria-label="ARG ERP Architechtual Decison Records" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    ARG ERP Architechtual Decison Records
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/American-Refining-Group/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    American-Refining-Group/
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Docs
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../AS400%20ORM%20Connection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AS400 ORM Connection
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Playwright%20Testing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Playwright Testing
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Debugging Documentation
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Debugging Documentation
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Debugging%20Documentation/DEBUGGING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Debugging Node ↔ RPG ↔ IBM i Integrations
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Errors
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            Errors
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Debugging%20Documentation/errors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Error Playbooks
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Debugging%20Documentation/errors/500-internal-server-errors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    500 Internal Server Errors – Diagnostic Playbook
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Debugging%20Documentation/errors/502-bad-gateway/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    502 Bad Gateway – Diagnostic Playbook
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Debugging%20Documentation/errors/503-service-unavailable/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    503 Service Unavailable – Diagnostic Playbook
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Debugging%20Documentation/errors/504-gateway-timeouts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    504 Gateway Timeouts – Diagnostic Playbook
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Debugging%20Documentation/errors/db2-connection-failures/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    DB2 Connection Failures (SQLSTATE 08001/08004) – Diagnostic Playbook
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_3" id="__nav_4_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Workflows
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_3">
+            <span class="md-nav__icon md-icon"></span>
+            Workflows
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Debugging%20Documentation/workflows/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Debugging Workflows Index
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Debugging%20Documentation/workflows/ibmi-tooling/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    IBM Navigator, ACS, Data Studio, and 5250 Toolkit
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Debugging%20Documentation/workflows/rapid-triage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Rapid Incident Triage (Full Stack)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Debugging%20Documentation/workflows/vscode-debugging/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    VS Code ↔ NestJS ↔ IBM i Bridge
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Front End ADR's
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Front End ADR's
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Front%20End%20ADR%27s/Client%20Side%20Grid%20Handling/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Client-Side Grid
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Front%20End%20ADR%27s/File%20Upload%20Workflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    File Upload Workflow
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Front%20End%20ADR%27s/LRO%20Long%20Running%20Operations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    LRO Long Running Operations
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Front%20End%20ADR%27s/Uproccesed%20Records%20Response/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Upload Status Response Object Documentation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Process Documentation
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Process Documentation
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Delivery, QA, and IBM i Playbooks
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/approve-qa-test-cases-from-acceptance-criteria/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Approve QA Test Cases from Acceptance Criteria
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/code-review-nodejs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Code Review – Node.js
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/code-review-rpg/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Code Review – RPG
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/feature-change-requests/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Feature Change Requests
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/integrations-with-external-apps/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Integrations with External Apps
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/issues-after-deployment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Issues After Deployment
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/legacy-table-to-api-resource-mapping/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Legacy Table to API Resource Mapping
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/own-go-live-tasks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Own Go-Live Tasks
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/rpg-program-signoff-syntax-compile/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    RPG Program Signoff (Syntax/Compile)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/rpg-testing-e2e/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    RPG Testing End-to-End
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/sign-off-on-uat-stage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Sign Off on UAT (Stage)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/sign-off-user-stories-and-brd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Sign Off User Stories and BRD
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/transfer-rpg-programs-to-power-10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Transfer RPG Programs to Power 10
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_15" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_15" id="__nav_6_15_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Examples
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_15_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_15">
+            <span class="md-nav__icon md-icon"></span>
+            Examples
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Delivery Examples – End-to-End Runs
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/examples/approve-qa-test-cases-from-acceptance-criteria/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Example – Approve QA Test Cases from Acceptance Criteria
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/examples/code-review-nodejs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Example – Code Review (Node.js)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/examples/code-review-rpg/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Example – Code Review (RPG)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/examples/feature-change-requests/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Example – Feature Change Requests
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/examples/integrations-with-external-apps/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Example – Integrations with External Apps
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/examples/issues-after-deployment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Example – Issues After Deployment
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/examples/legacy-table-to-api-resource-mapping/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Example – Legacy Table to API Resource Mapping
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/examples/own-go-live-tasks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Example – Own Go-Live Tasks
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/examples/rpg-program-signoff-syntax-compile/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Example – RPG Program Signoff (Syntax/Compile)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/examples/rpg-testing-e2e/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Example – RPG Testing End-to-End
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/examples/sign-off-on-uat-stage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Example – Sign Off on UAT (Stage)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/examples/sign-off-user-stories-and-brd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Example – Sign Off User Stories and BRD
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/examples/transfer-rpg-programs-to-power-10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Example – Transfer RPG Programs to Power 10
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_16" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_16" id="__nav_6_16_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Tools
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_16_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_16">
+            <span class="md-nav__icon md-icon"></span>
+            Tools
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Tool-Specific Delivery Playbooks
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/tools/approve-qa-test-cases-from-acceptance-criteria/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Approve QA Test Cases – Tool Walkthrough
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/tools/code-review-nodejs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Code Review – Node.js (Tool Playbook)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/tools/code-review-rpg/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Code Review – RPG (Tool Playbook)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/tools/feature-change-requests/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Feature Change Requests – Tool Playbook
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/tools/integrations-with-external-apps/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Integrations with External Apps – Tool Walkthrough
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/tools/issues-after-deployment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Issues After Deployment – Tool Playbook
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/tools/legacy-table-to-api-resource-mapping/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Legacy Table to API Resource Mapping – Tool Walkthrough
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/tools/own-go-live-tasks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Own Go-Live Tasks – Tool Playbook
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/tools/rpg-program-signoff-syntax-compile/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    RPG Program Signoff (Syntax/Compile) – Tool Playbook
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/tools/rpg-testing-e2e/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    RPG Testing End-to-End – Tool Playbook
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/tools/sign-off-on-uat-stage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Sign Off on UAT (Stage) – Tool Playbook
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/tools/sign-off-user-stories-and-brd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Sign Off User Stories and BRD – Tool Walkthrough
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Process%20Documentation/tools/transfer-rpg-programs-to-power-10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Transfer RPG Programs to Power 10 – Tool Playbook
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    REST API ADR's
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            REST API ADR's
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../REST%20API%20ADR%27s/Reporting%20System%20Modernization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    App Reports Structure
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    RPG Legacy ADR's
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            RPG Legacy ADR's
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    ADR: Layered Error Handling for AS/400 RPGLE/CLLE Applications
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    ADR: Layered Error Handling for AS/400 RPGLE/CLLE Applications
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#context" class="md-nav__link">
+    <span class="md-ellipsis">
+      Context
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#decision" class="md-nav__link">
+    <span class="md-ellipsis">
+      Decision
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Decision">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-normal-path-vs-each-layer-catching-a-failure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram — normal path vs. each layer catching a failure
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#layer-1-rpgle-program-level-the-source-of-truth" class="md-nav__link">
+    <span class="md-ellipsis">
+      Layer 1 — RPGLE program level (the source of truth)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#layer-2-clle-orchestration-level" class="md-nav__link">
+    <span class="md-ellipsis">
+      Layer 2 — CLLE orchestration level
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#layer-3-subsystem-job-level-the-safety-net" class="md-nav__link">
+    <span class="md-ellipsis">
+      Layer 3 — Subsystem / job level (the safety net)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-three-layers-instead-of-one" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why three layers instead of one
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#consequences" class="md-nav__link">
+    <span class="md-ellipsis">
+      Consequences
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#open-questions-next-iteration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Open questions / next iteration
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AS400%20Stored%20Procedure%20Calls/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AS400 Stored Procedure Calls
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RPG%20Development%20Standards/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    RPG Program and Database File Development Standards
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Security ADR's
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            Security ADR's
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Security%20ADR%27s/Authorization%20Workflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Authorization Workflow
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Testing ARD's
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            Testing ARD's
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Testing%20ARD%27s/UAT%20Process/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    User Acceptance Testing (UAT) Process
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#context" class="md-nav__link">
+    <span class="md-ellipsis">
+      Context
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#decision" class="md-nav__link">
+    <span class="md-ellipsis">
+      Decision
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Decision">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-normal-path-vs-each-layer-catching-a-failure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram — normal path vs. each layer catching a failure
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#layer-1-rpgle-program-level-the-source-of-truth" class="md-nav__link">
+    <span class="md-ellipsis">
+      Layer 1 — RPGLE program level (the source of truth)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#layer-2-clle-orchestration-level" class="md-nav__link">
+    <span class="md-ellipsis">
+      Layer 2 — CLLE orchestration level
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#layer-3-subsystem-job-level-the-safety-net" class="md-nav__link">
+    <span class="md-ellipsis">
+      Layer 3 — Subsystem / job level (the safety net)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-three-layers-instead-of-one" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why three layers instead of one
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#consequences" class="md-nav__link">
+    <span class="md-ellipsis">
+      Consequences
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#open-questions-next-iteration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Open questions / next iteration
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="adr-layered-error-handling-for-as400-rpgleclle-applications">ADR: Layered Error Handling for AS/400 RPGLE/CLLE Applications<a class="headerlink" href="#adr-layered-error-handling-for-as400-rpgleclle-applications" title="Permanent link">&para;</a></h1>
+<p><strong>Status:</strong> Draft v0.1 — for team review, expect to iterate
+<strong>Date:</strong> 2026-08-06
+<strong>Owners:</strong> ARG RPG team / Damco</p>
+<h2 id="context">Context<a class="headerlink" href="#context" title="Permanent link">&para;</a></h2>
+<p>RPGLE programs get called two ways: interactively, and from prestart jobs
+(QZDASOINIT) servicing ODBC/JDBC calls from the front-end (e.g. EDI804/AP200
+style calls). Prestart jobs have no interactive user attached. Historically,
+when an RPGLE program hit an unhandled error, the job could end up sending an
+inquiry message and sitting in <strong>MSGW</strong>, waiting forever for a reply that
+would never come — the client call just hangs until someone notices and
+cancels the job manually.</p>
+<p>We're closing that gap, but not with a single fix — we're adding error
+handling at three separate layers, each catching what the layer below it
+might miss. This ADR is just meant to write down the shape of that stack
+so everyone's pointing at the same mental model. Details (retention, naming,
+etc.) can get refined later.</p>
+<h2 id="decision">Decision<a class="headerlink" href="#decision" title="Permanent link">&para;</a></h2>
+<p>Implement error handling at three layers:</p>
+<h3 id="diagram-normal-path-vs-each-layer-catching-a-failure">Diagram — normal path vs. each layer catching a failure<a class="headerlink" href="#diagram-normal-path-vs-each-layer-catching-a-failure" title="Permanent link">&para;</a></h3>
+<pre class="mermaid"><code>sequenceDiagram
+    participant FE as Front-End
+    participant CL as CLLE
+    participant RPG as RPGLE
+    participant SYS as OS / Prestart Pool (QZDASOINIT)
+
+    FE-&gt;&gt;CL: Call transaction (e.g. AP200CL)
+    CL-&gt;&gt;RPG: CALL AP200
+    RPG-&gt;&gt;RPG: File I/O / business logic
+
+    alt Layer 1 + 2 (normal path) - handled error
+        RPG-&gt;&gt;RPG: *PSSR fires
+        RPG-&gt;&gt;RPG: CALL GSWRTLOG (write ARGERRLOG)
+        RPG-&gt;&gt;SYS: DUMP(A) to QGPL/DUMPS
+        RPG--&gt;&gt;CL: ENDSR('*CANCL')
+        CL-&gt;&gt;CL: MONMSG(CPF0000) catches escape msg
+        CL-&gt;&gt;FE: ERRMSG = "SP_ERROR: AP200CL - Program AP200 Failed in - ..."
+    else Layer 3 (safety net) - unhandled inquiry
+        RPG-&gt;&gt;SYS: Inquiry msg raised (e.g. RNQ0000), no *PSSR path hit
+        Note over SYS: Old behavior: job sits in MSGW indefinitely
+        SYS-&gt;&gt;SYS: Reply list (SEQNBR 25) auto-replies 'D'
+        SYS-&gt;&gt;SYS: Job dumps and cancels instead of hanging
+        SYS--&gt;&gt;FE: Call fails fast (times out / drops) instead of hanging
+    end</code></pre>
+<p><strong>Reading it:</strong> the top branch (Layer 1 → Layer 2) is what we want almost
+every failure to take — logged, dumped, and reported cleanly to the caller.
+The bottom branch (Layer 3) only fires for whatever falls through both of
+those; its job isn't to explain the failure, just to guarantee the
+prestart job doesn't sit in MSGW forever.</p>
+<h3 id="layer-1-rpgle-program-level-the-source-of-truth">Layer 1 — RPGLE program level (the source of truth)<a class="headerlink" href="#layer-1-rpgle-program-level-the-source-of-truth" title="Permanent link">&para;</a></h3>
+<p>Every RPGLE program gets:
+- <code>INFSR(*PSSR)</code> added to each F-spec, so file-related errors (dup key, etc.)
+  route into the program's own error subroutine instead of defaulting.
+- A <code>*PSSR</code> subroutine that:
+  - Calls <code>GSWRTLOG</code>, passing the current program name, to write a row into
+    a new error log file, <strong>ARGERRLOG</strong>.
+  - <code>DUMP(A)</code> — produces a formatted program dump, landed in OUTQ
+    <code>QGPL/DUMPS</code> (needs to exist on Power 10 too).
+  - <code>ENDSR('*CANCL')</code> — cancels the program rather than retrying.</p>
+<p>This is rolled out via a Damco-built tool (<code>EH0101</code>) that injects the
+boilerplate into existing source (<code>CALL PGM(EH0101) PARM((lib)(file)(mbr))</code>),
+so it doesn't have to be hand-added to every program.</p>
+<p><strong>Example — F-spec:</strong></p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span></pre></div></td><td class="code"><div><pre><span></span><code>     Faptran    IP   F  404        DISK              INFSR(*PSSR)
+     Fapcont    UF   F  256     2AIDISK    KEYLOC(2) INFSR(*PSSR)
+</code></pre></div></td></tr></table></div>
+<p><strong>Example — <code>*PSSR</code> subroutine (added once per program):</strong></p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span></pre></div></td><td class="code"><div><pre><span></span><code>c* ==================================================================== *
+c     *PSSR         BEGSR
+c                    CALL      &#39;GSWRTLOG&#39;
+c                    PARM      &#39;AP200&#39;       PgmName          10
+c                    DUMP(A)
+c                    ENDSR     &#39;*CANCL&#39;
+c* ==================================================================== *
+</code></pre></div></td></tr></table></div>
+<p><code>PgmName</code> is just the current program's name, hardcoded per program so
+<code>GSWRTLOG</code> knows who to attribute the log row to. <code>DUMP(A)</code> writes the
+formatted dump; <code>ENDSR('*CANCL')</code> ends the program rather than trying to
+resume — we want a clean failure, not a program limping on with bad state.</p>
+<p><strong>This is the layer that actually knows what failed and why.</strong></p>
+<h3 id="layer-2-clle-orchestration-level">Layer 2 — CLLE orchestration level<a class="headerlink" href="#layer-2-clle-orchestration-level" title="Permanent link">&para;</a></h3>
+<p>Each CLLE that calls an RPGLE program wraps the call with
+<code>MONMSG(CPF0000)</code>. On error, the CLLE populates an <code>ERRMSG</code> output parameter
+in a fixed format:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>SP_ERROR: &lt;CL_Program&gt; - Program &lt;RPGLE_Program&gt; Failed in - &lt;Job&gt;/&lt;User&gt;/&lt;JobName&gt; - &lt;Date&gt; - &lt;Time&gt;
+</code></pre></div></td></tr></table></div>
+<p>The front-end surfaces that string directly to the caller/user instead of
+the request just hanging.</p>
+<p><strong>Example — CLLE wrapping an RPGLE call:</strong></p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span></pre></div></td><td class="code"><div><pre><span></span><code>             PGM        PARM(&amp;ERRMSG)
+
+             DCL        VAR(&amp;ERRMSG)   TYPE(*CHAR) LEN(200)
+             DCL        VAR(&amp;JOBNBR)   TYPE(*CHAR) LEN(6)
+             DCL        VAR(&amp;JOBUSER)  TYPE(*CHAR) LEN(10)
+             DCL        VAR(&amp;JOBNAME)  TYPE(*CHAR) LEN(10)
+             DCL        VAR(&amp;SYSDATE)  TYPE(*CHAR) LEN(8)
+             DCL        VAR(&amp;SYSTIME)  TYPE(*CHAR) LEN(6)
+
+             RTVJOBA    JOB(&amp;JOBNAME) USER(&amp;JOBUSER) NBR(&amp;JOBNBR)
+             RTVSYSVAL  SYSVAL(QDATE) RTNVAR(&amp;SYSDATE)  /* or CVTDAT as needed */
+
+             CALL       PGM(AP200)
+             MONMSG     MSGID(CPF0000) EXEC(DO)
+                CHGVAR     VAR(&amp;ERRMSG) VALUE(&#39;SP_ERROR: AP200CL - Program&#39; +
+                             &#39; AP200 Failed in - &#39; *BCAT &amp;JOBNBR *BCAT &#39;/&#39; +
+                             *CAT &amp;JOBUSER *BCAT &#39;/&#39; *CAT &amp;JOBNAME)
+                GOTO       CMDLBL(ENDPGM)
+             ENDDO
+
+             ENDPGM:
+             ENDPGM
+</code></pre></div></td></tr></table></div>
+<p>The exact date/time formatting is left flexible — the point for this ADR is
+the shape: <strong>call → <code>MONMSG(CPF0000)</code> → build <code>SP_ERROR:</code> string → return
+it via <code>&amp;ERRMSG</code>.</strong> Every CLLE in the call chain should follow this same
+pattern so the front-end always gets the same message shape regardless of
+which program failed.</p>
+<p><strong>This is the layer that turns a program failure into something the caller
+can actually see.</strong></p>
+<h3 id="layer-3-subsystem-job-level-the-safety-net">Layer 3 — Subsystem / job level (the safety net)<a class="headerlink" href="#layer-3-subsystem-job-level-the-safety-net" title="Permanent link">&para;</a></h3>
+<p>Even with layers 1 and 2 in place, some conditions never reach the app's own
+<code>*PSSR</code> (e.g. certain RPG runtime messages like <code>RNQ0000</code>) and can still
+raise an inquiry message on a prestart job — which, again, has no one to
+reply to it. This layer is the backstop:</p>
+<ul>
+<li>Add a reply-list entry: <code>ADDRPYLE SEQNBR(25) MSGID(RNQ0000) RPY('D') DUMP(*NO)</code>
+  (an existing entry at seq 20 already does the same for <code>RPG0000</code>).</li>
+<li>Point the pool's job description at the reply list:
+  <code>CHGJOBD JOBD(QGPL/QZDAJOBD) INQMSGRPY(*SYSRPYL)</code>.</li>
+<li>Recycle the QZDASOINIT prestart pool so running jobs pick it up.</li>
+</ul>
+<p>Net effect: instead of hanging in MSGW, the job auto-replies <strong>D</strong> (dump)
+and moves on — fast failure instead of a silent hang. <code>DUMP(*NO)</code> on this
+entry is intentional: the app-level dump from Layer 1 is usually already
+there, so we're not doubling up.</p>
+<p><strong>This is the layer that catches anything that slips past the first two.</strong></p>
+<h2 id="why-three-layers-instead-of-one">Why three layers instead of one<a class="headerlink" href="#why-three-layers-instead-of-one" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Layer 1 gives us the most useful diagnostic (log entry + dump), but only
+  if the program was updated with the <code>EH0101</code> changes.</li>
+<li>Layer 2 gives the caller a clean, visible failure message, but only
+  covers CLLE-to-RPGLE call paths.</li>
+<li>Layer 3 doesn't know anything about <em>why</em> something failed — it just
+  guarantees nothing hangs indefinitely, even for programs/paths we haven't
+  instrumented yet or didn't anticipate.</li>
+</ul>
+<p>Together: known failures are logged and reported cleanly; unknown/unhandled
+ones still fail fast instead of hanging a prestart job.</p>
+<h2 id="consequences">Consequences<a class="headerlink" href="#consequences" title="Permanent link">&para;</a></h2>
+<ul>
+<li>The Layer 3 change is <strong>box-wide</strong> (<code>QZDAJOBD</code> is shared) — PROD prestart
+  jobs get dump-and-cancel behavior too, not just the target app. Worth
+  calling out explicitly in the change record.</li>
+<li><code>QGPL/QZDAJOBD</code> is IBM-supplied, so an OS upgrade or <code>RSTLIB QGPL</code> can
+  silently revert the <code>INQMSGRPY</code> setting — add to the post-upgrade
+  checklist.</li>
+<li>If some CL in the codebase issues a runtime <code>CHGJOB INQMSGRPY(*DFT)</code>,
+  it'll override the reply list for that job and reply <code>C</code> (cancel, no
+  dump) instead — worth grepping for.</li>
+<li>There's a brief window during the prestart-pool recycle where new DB
+  connections are refused; needs to be timed around batch/ETL windows.</li>
+</ul>
+<h2 id="open-questions-next-iteration">Open questions / next iteration<a class="headerlink" href="#open-questions-next-iteration" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Retention/rotation policy for <code>QGPL/DUMPS</code> and <code>ARGERRLOG</code>.</li>
+<li>Whether Layer 3's reply-list approach should eventually cover other
+  message IDs beyond <code>RNQ0000</code>/<code>RPG0000</code>.</li>
+<li>Whether we want a periodic job to clear stale <code>RNQ1216</code> backlog in
+  QSYSOPR automatically rather than doing it manually.</li>
+<li>Real date/time capture in the CL snippet (<code>RTVSYSVAL</code>/<code>CVTDAT</code> details)
+  is illustrative above — confirm the exact fields Damco's existing CLLE
+  template already uses so we don't reinvent it.</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "content.tabs", "navigation.sections", "search.suggest", "search.highlight", "palette.toggle"], "search": "../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.56ea9cef.min.js"></script>
+      
+    
+  </body>
+</html>
